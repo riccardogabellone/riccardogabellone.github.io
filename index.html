@@ -17,8 +17,10 @@
         /* Base styles for the permanent dark theme */
         body {
             font-family: 'Inter', sans-serif;
-            /* Apply dark theme directly */
-            @apply bg-gray-900 text-gray-200;
+            background-color: #111827;
+            /* bg-gray-900 */
+            color: #e5e7eb;
+            /* text-gray-200 */
         }
 
         .material-symbols-outlined {
@@ -38,7 +40,6 @@
             display: inline-block;
             animation: loading-dots 1s infinite steps(3, end);
             color: #9ca3af;
-            /* gray-400 */
         }
 
         @keyframes loading-dots {
@@ -76,7 +77,8 @@
             top: 0.25rem;
             bottom: 0;
             width: 2px;
-            @apply bg-gray-600;
+            background-color: #4b5563;
+            /* bg-gray-600 */
         }
 
         .timeline-item:last-child::before {
@@ -90,7 +92,8 @@
             width: 1.25rem;
             height: 1.25rem;
             border-radius: 50%;
-            @apply bg-purple-500;
+            background-color: #a855f7;
+            /* bg-purple-500 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -99,7 +102,8 @@
 
         .timeline-marker .material-symbols-outlined {
             font-size: 0.875rem;
-            @apply text-white;
+            color: #ffffff;
+            /* text-white */
         }
 
         /* Language bar styles (Dark) */
@@ -124,17 +128,20 @@
             border-radius: 9999px;
             height: 0.625rem;
             overflow: hidden;
-            @apply bg-gray-700;
+            background-color: #374151;
+            /* bg-gray-700 */
         }
 
         .language-progress-bar {
             height: 100%;
             border-radius: 9999px;
             transition: width 0.5s ease-in-out;
-            @apply bg-purple-500;
+            /* Using the purple from the script for consistency */
+            background-color: #8b5cf6;
+            /* bg-purple-600 (consistent with script) */
         }
 
-        /* Contribution Calendar Styles (Dracula Theme) */
+        /* Contribution Calendar Styles (Dracula Theme for grid, M3 Dark for container/chips) */
         .calendar-container {
             background-color: #181818;
             padding: 1rem 1.5rem;
@@ -143,25 +150,14 @@
             border: 1px solid #282a36;
         }
 
-        .calendar-header {
-            color: #f8f8f2;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .calendar-header span {
-            color: #bd93f9;
-            font-weight: 600;
-        }
-
-        .calendar-header p {
-            margin-bottom: 0.25rem;
-        }
-
         .calendar-grid-container {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: center;
+            /* Add horizontal scroll only if grid overflows */
             overflow-x: auto;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
+            /* Space for scrollbar if needed */
         }
 
         .calendar-grid {
@@ -171,7 +167,6 @@
             grid-auto-columns: 12px;
             gap: 3px;
             width: max-content;
-            margin-top: 0.5rem;
         }
 
         .calendar-cell {
@@ -184,12 +179,65 @@
         .calendar-cell:hover {
             outline: 1px solid #f8f8f2;
         }
+
+        /* Year Chips Styles */
+        .year-chip {
+            display: inline-block;
+            font-size: 0.75rem;
+            /* text-xs */
+            line-height: 1rem;
+            font-weight: 500;
+            /* font-medium */
+            padding-left: 0.75rem;
+            /* px-3 */
+            padding-right: 0.75rem;
+            /* px-3 */
+            padding-top: 0.25rem;
+            /* py-1 */
+            padding-bottom: 0.25rem;
+            /* py-1 */
+            border-radius: 9999px;
+            /* rounded-full */
+            cursor: pointer;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 200ms;
+            background-color: rgba(88, 28, 135, 0.5);
+            /* bg-purple-900 bg-opacity-50 */
+            color: #e9d5ff;
+            /* text-purple-200 */
+            border: none;
+            /* Ensure button default border is removed */
+            text-align: center;
+        }
+
+        .year-chip.selected {
+            background-color: #8b5cf6;
+            /* bg-purple-600 */
+            color: #ffffff;
+            /* text-white */
+            cursor: default;
+        }
+
+        .year-chip.total {
+            background-color: #4b5563;
+            /* bg-gray-600 */
+            color: #e5e7eb;
+            /* text-gray-200 */
+            cursor: default;
+            align-content: center;
+        }
+
+        .year-chip:not(.selected):not(.total):hover {
+            background-color: rgba(107, 33, 168, 0.7);
+            /* bg-purple-800 bg-opacity-70 */
+        }
     </style>
 </head>
 
 <body class="bg-gray-900 text-gray-200">
 
-    <div class="container mx-auto max-w-6xl p-4 md:p-8">
+    <div class="container mx-auto max-w-7xl p-4 md:p-8">
 
         <header
             class="mb-12 rounded-lg p-6 md:p-8 shadow-lg flex flex-col md:flex-row items-center relative bg-gray-800 border border-gray-700">
@@ -222,25 +270,23 @@
                                 d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z" />
                         </svg> </a>
                     <a id="email-link" href="mailto:ing.riccardogabellone@gmail.com"
-                        class="hover:text-purple-400 transition-colors" aria-label="Email Me">
-                        <span class="material-symbols-outlined">mail</span> </a>
+                        class="hover:text-purple-400 transition-colors" aria-label="Email Me"> <span
+                            class="material-symbols-outlined">mail</span> </a>
                 </div>
             </div>
         </header>
 
-        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-8">
+        <main class="grid grid-cols-1 lg:grid-cols-7 gap-8">
+            <div class="lg:col-span-5 space-y-8">
                 <section id="bio" class="rounded-lg p-6 shadow-lg bg-gray-800 border border-gray-700">
-                    <h2 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center">
-                        <span class="material-symbols-outlined mr-2">person</span> About Me
-                    </h2>
+                    <h2 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center"> <span
+                            class="material-symbols-outlined mr-2">person</span> About Me </h2>
                     <p id="profile-bio" class="prose prose-invert max-w-none text-gray-300 loading-placeholder">...</p>
                 </section>
 
                 <section id="github-stats" class="rounded-lg p-6 shadow-lg bg-gray-800 border border-gray-700">
-                    <h2 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center">
-                        <span class="material-symbols-outlined mr-2">monitoring</span> GitHub Statistics
-                    </h2>
+                    <h2 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center"> <span
+                            class="material-symbols-outlined mr-2">monitoring</span> GitHub Statistics </h2>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6 text-center">
                         <div class="bg-gray-700 p-4 rounded-md">
                             <div id="commits-count" class="text-3xl font-bold text-purple-400 loading-placeholder">...
@@ -281,8 +327,15 @@
                     <div class="mb-6">
                         <h3 class="text-lg font-semibold mb-2 text-gray-400">Contribution Activity</h3>
                         <div id="contribution-calendar-container"
-                            class="calendar-container min-h-[200px] flex items-center justify-center">
-                            <p class="loading-placeholder text-gray-400">Loading contribution data...</p>
+                            class="calendar-container min-h-[200px] flex flex-col items-center justify-center">
+                            <div id="calendar-grid-placeholder"
+                                class="w-full min-h-[115px] my-4 flex items-center justify-center">
+                                <p class="loading-placeholder text-gray-400">Loading contribution grid...</p>
+                            </div>
+                            <div id="year-chips-container"
+                                class="mt-4 flex flex-wrap gap-2 justify-center min-h-[30px]">
+                                <p class="loading-placeholder text-gray-400 text-xs">Loading years...</p>
+                            </div>
                         </div>
                     </div>
 
@@ -320,18 +373,16 @@
                 </section> -->
             </div>
 
-            <div class="lg:col-span-1 space-y-8">
+            <div class="lg:col-span-2 space-y-8">
                 <section id="skills" class="rounded-lg p-6 shadow-lg bg-gray-800 border border-gray-700">
-                    <h2 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center">
-                        <span class="material-symbols-outlined mr-2">terminal</span> Skills & Tech stack
+                    <h2 class="text-2xl font-semibold mb-4 text-purple-400 flex items-center"> <span
+                            class="material-symbols-outlined mr-2">terminal</span> Skills & Tech stack
                     </h2>
                     <div class="flex flex-wrap gap-2">
                         <span
                             class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">Python</span>
                         <span
                             class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">Rust</span>
-                        <span
-                            class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">Kotlin</span>
                         <span
                             class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">PostgreSQL</span>
                         <span
@@ -343,12 +394,16 @@
                         <span
                             class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">Terraform</span>
                         <span
+                            class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">Kotlin</span>
+                        <span
                             class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">JavaScript</span>
+                        <span
+                            class="bg-purple-900 bg-opacity-50 text-purple-200 text-sm font-medium px-3 py-1 rounded-full">Flutter</span>
                     </div>
                 </section>
                 <section id="experience" class="rounded-lg p-6 shadow-lg bg-gray-800 border border-gray-700">
                     <h2 class="text-2xl font-semibold mb-6 text-purple-400 flex items-center">
-                        <span class="material-symbols-outlined mr-2">timeline</span> Experience
+                        <span class="material-symbols-outlined mr-2">timeline</span> Experience & Education
                     </h2>
                     <div class="relative">
                         <div class="timeline-item">
@@ -403,149 +458,120 @@
         const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbyzbrUmB1JTP23S1Tl8bHnIf1JnV0MMCOzdEdpJmSrZ4BW-RPBQthAEs7ghze1y3u3BXQ/exec';
         const githubUsername = 'riccardogabellone';
 
-        // Store fetched data globally if needed
+        // Store fetched data globally
         window.currentLanguageData = null;
         window.currentContributionData = null;
+        window.selectedContributionYear = null; // Track selected year
 
         // --- Helper Functions ---
         function updateText(elementId, value, isPlaceholder = false) {
-            const element = document.getElementById(elementId);
-            if (!element) { console.warn(`Element ID "${elementId}" not found.`); return; }
-            let displayValue = 'N/A';
-            if (value !== undefined && value !== null) {
-                if (typeof value === 'number' && value >= 1000 && !elementId.includes('year')) {
-                    displayValue = value.toLocaleString();
-                } else { displayValue = value; }
-            }
-            element.textContent = displayValue;
-            if (!isPlaceholder) element.classList.remove('loading-placeholder');
+            const element = document.getElementById(elementId); if (!element) { console.warn(`Element ID "${elementId}" not found.`); return; } let displayValue = 'N/A'; if (value !== undefined && value !== null) { if (typeof value === 'number' && value >= 1000 && !elementId.includes('year')) { displayValue = value.toLocaleString(); } else { displayValue = value; } } element.textContent = displayValue; if (!isPlaceholder) element.classList.remove('loading-placeholder');
         }
         function updateImage(elementId, value) {
-            const element = document.getElementById(elementId);
-            if (element && value) element.src = value;
-            else if (element) console.warn(`Image src missing for "${elementId}".`);
-            else console.warn(`Element ID "${elementId}" not found.`);
+            const element = document.getElementById(elementId); if (element && value) element.src = value; else if (element) console.warn(`Image src missing for "${elementId}".`); else console.warn(`Element ID "${elementId}" not found.`);
         }
 
         // --- Language Stats Rendering ---
-        function renderLanguageStats(languages) {
-            window.currentLanguageData = languages;
-            const container = document.getElementById('language-stats-container');
-            if (!container) return;
-            if (!Array.isArray(languages) || languages.length === 0) { container.innerHTML = '<p class="text-sm text-gray-400">Language data not available.</p>'; return; }
-            let languageHtml = '';
-            languages.forEach(lang => {
-                const percentage = parseFloat(lang.percentage) || 0;
-                const color = '#8b5cf6'; // Dark theme primary color (Purple-500)
-                languageHtml += `
-                     <div class="language-item">
-                         <div class="language-label text-gray-300">
-                             <span>${lang.name || 'Unknown'}</span>
-                             <span class="font-medium text-purple-400">${percentage.toFixed(1)}%</span>
-                         </div>
-                         <div class="language-progress-bg bg-gray-700">
-                             <div class="language-progress-bar" style="width: ${percentage}%; background-color: ${color};"></div>
-                         </div>
-                     </div>`;
-            });
-            container.innerHTML = languageHtml;
+        function renderLanguageStats(languages) { /* ... (same as before) ... */
+            window.currentLanguageData = languages; const container = document.getElementById('language-stats-container'); if (!container) return; if (!Array.isArray(languages) || languages.length === 0) { container.innerHTML = '<p class="text-sm text-gray-400">Language data not available.</p>'; return; } let languageHtml = ''; languages.forEach(lang => { const percentage = parseFloat(lang.percentage) || 0; const color = '#8b5cf6'; languageHtml += `<div class="language-item"><div class="language-label text-gray-300"><span>${lang.name || 'Unknown'}</span><span class="font-medium text-purple-400">${percentage.toFixed(1)}%</span></div><div class="language-progress-bg bg-gray-700"><div class="language-progress-bar" style="width: ${percentage}%; background-color: ${color};"></div></div></div>`; }); container.innerHTML = languageHtml;
         }
 
-        // --- Contribution Chart Rendering (Dracula Theme) ---
-        const draculaTheme = {
-            background: "#181818", text: "#f8f8f2", meta: "#666666",
-            grade4: "#ff79c6", grade3: "#bd93f9", grade2: "#6272a4",
-            grade1: "#44475a", grade0: "#282a36"
-        };
-
-        function getDraculaColor(intensity) {
-            switch (String(intensity || '0')) {
-                case '4': return draculaTheme.grade4;
-                case '3': return draculaTheme.grade3;
-                case '2': return draculaTheme.grade2;
-                case '1': return draculaTheme.grade1;
-                case '0': default: return draculaTheme.grade0;
-            }
+        // --- Contribution Chart Rendering (Single Year) ---
+        const draculaTheme = { grade4: "#ff79c6", grade3: "#bd93f9", grade2: "#6272a4", grade1: "#44475a", grade0: "#282a36" };
+        function getDraculaColor(intensity) { /* ... (same as before) ... */
+            switch (String(intensity || '0')) { case '4': return draculaTheme.grade4; case '3': return draculaTheme.grade3; case '2': return draculaTheme.grade2; case '1': return draculaTheme.grade1; case '0': default: return draculaTheme.grade0; }
         }
 
-        function renderContributionChart(contributionData) {
-            // Renamed parameter to avoid conflict with global variable name
-            window.currentContributionData = contributionData;
-            const container = document.getElementById('contribution-calendar-container');
-
-            // Validate data structure received from GAS
-            if (!container || !contributionData || typeof contributionData !== 'object' || !Array.isArray(contributionData.contributions) || !Array.isArray(contributionData.years)) {
-                if (container) container.innerHTML = '<p class="text-red-400">Invalid contribution data structure received.</p>';
-                console.error("Invalid contribution data structure:", contributionData);
-                return;
-            }
-            // Check specifically for error object passed from GAS
-            if (contributionData.error) {
-                if (container) container.innerHTML = `<p class="text-red-400">Error loading contribution data from source: ${contributionData.error}</p>`;
-                console.error("Error fetching contribution data via GAS:", contributionData.error);
+        // Function to render the grid for a specific year
+        function renderContributionGrid(year, allContributions) {
+            const gridPlaceholder = document.getElementById('calendar-grid-placeholder'); // Target the placeholder
+            if (!gridPlaceholder || !allContributions) {
+                if (gridPlaceholder) gridPlaceholder.innerHTML = '<p class="text-yellow-400 text-xs">Could not render grid.</p>';
                 return;
             }
 
-
-            container.innerHTML = ''; // Clear loading state
-            // Container background set via CSS class 'calendar-container'
-
-            // --- Add Year/Total Information Header ---
-            const headerDiv = document.createElement('div');
-            headerDiv.className = 'calendar-header';
-            let totalContributions = 0;
-            const sortedYears = contributionData.years.sort((a, b) => parseInt(b.year) - parseInt(a.year));
-            sortedYears.forEach(yearData => {
-                totalContributions += yearData.total;
-                const yearP = document.createElement('p');
-                yearP.innerHTML = `${yearData.year}: <span>${yearData.total.toLocaleString()}</span>`;
-                headerDiv.appendChild(yearP);
-            });
-            const totalP = document.createElement('p');
-            totalP.className = 'font-semibold mt-2';
-            totalP.innerHTML = `Total: <span>${totalContributions.toLocaleString()}</span>`;
-            headerDiv.insertBefore(totalP, headerDiv.firstChild);
-            container.appendChild(headerDiv);
-
-            // --- Create Grid ---
-            const gridContainer = document.createElement('div');
-            gridContainer.className = 'calendar-grid-container';
+            gridPlaceholder.innerHTML = ''; // Clear placeholder content
             const grid = document.createElement('div');
             grid.className = 'calendar-grid';
 
-            const contribMap = new Map(contributionData.contributions.map(c => [c.date.split('T')[0], c]));
-            // eg.: {"2025-12-30" : {date: '2025-12-30T23:00:00.000Z', count: 0, color: '#ebedf0', intensity: 0}}
-            const endDate = new Date();
-            const startDate = new Date();
-            const daysToGoBack = 364 + endDate.getDay();
-            startDate.setDate(endDate.getDate() - daysToGoBack);
+            const yearInt = parseInt(year);
+            const contribMap = new Map(
+                allContributions
+                    .filter(c => c.date.startsWith(year))
+                    .map(c => [c.date.split('T')[0], c])
+            );
 
+            const startDate = new Date(yearInt, 0, 1);
+            const endDate = new Date(yearInt, 11, 31);
+            const startDay = startDate.getDay(); // 0 = Sunday
+
+            // Add padding cells before Jan 1st
+            for (let i = 0; i < startDay; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'calendar-cell invisible'; // Use invisible class if needed, or just default color
+                cell.style.backgroundColor = draculaTheme.grade0; // Ensure padding has base color
+                grid.appendChild(cell);
+            }
+
+            // Add cells for each day of the year
             let currentDay = new Date(startDate);
-            const dayCount = 7 * 53; // 53 weeks
-
-            for (let i = 0; i < dayCount; i++) {
+            while (currentDay <= endDate) {
                 const dateString = currentDay.toISOString().split('T')[0];
                 const cell = document.createElement('div');
                 cell.className = 'calendar-cell';
-
-                if (currentDay <= endDate) {
-                    const dayData = contribMap.get(dateString);
-                    const intensity = dayData ? dayData.intensity : '0';
-                    cell.style.backgroundColor = getDraculaColor(intensity);
-                    // const count = dayData ? dayData.count : 0;
-                    // cell.setAttribute('title', `${dateString}: ${count} contribution${count === 1 ? '' : 's'}`);
-                    cell.setAttribute('title', `${dateString}`);
-                } else {
-                    cell.style.backgroundColor = draculaTheme.grade0; // Future dates
-                }
-
+                const dayData = contribMap.get(dateString);
+                const intensity = dayData ? dayData.intensity : '0';
+                cell.style.backgroundColor = getDraculaColor(intensity);
+                const count = dayData ? dayData.count : 0;
+                cell.setAttribute('title', `${dateString}: ${count} contribution${count === 1 ? '' : 's'}`);
                 grid.appendChild(cell);
                 currentDay.setDate(currentDay.getDate() + 1);
             }
-
-            gridContainer.appendChild(grid);
-            container.appendChild(gridContainer);
+            gridPlaceholder.appendChild(grid); // Append the generated grid to the placeholder
         }
+
+        // Function to render the year selection chips
+        function renderYearChips(yearsData, totalContributions) {
+            const chipsContainer = document.getElementById('year-chips-container');
+            if (!chipsContainer || !yearsData) {
+                if (chipsContainer) chipsContainer.innerHTML = '<p class="text-xs text-yellow-400">Could not render year selectors.</p>';
+                return;
+            }
+
+            chipsContainer.innerHTML = ''; // Clear previous chips/loading text
+
+            // Add Total Chip
+            const totalChip = document.createElement('span');
+            totalChip.className = 'year-chip total';
+            totalChip.textContent = `Total: ${totalContributions.toLocaleString()}`;
+            chipsContainer.appendChild(totalChip);
+
+            // Add Year Chips
+            const sortedYears = yearsData.sort((a, b) => parseInt(b.year) - parseInt(a.year));
+
+            if (window.selectedContributionYear === null && sortedYears.length > 0) {
+                window.selectedContributionYear = sortedYears[0].year; // Default to latest year
+            }
+
+            sortedYears.forEach(yearData => {
+                const yearChip = document.createElement('button');
+                yearChip.className = 'year-chip';
+                yearChip.textContent = `${yearData.year}: ${yearData.total.toLocaleString()}`;
+                yearChip.dataset.year = yearData.year;
+                if (yearData.year === window.selectedContributionYear) {
+                    yearChip.classList.add('selected');
+                }
+                yearChip.addEventListener('click', () => {
+                    if (window.selectedContributionYear !== yearData.year) { // Prevent re-render if already selected
+                        window.selectedContributionYear = yearData.year;
+                        renderYearChips(yearsData, totalContributions); // Update chip styles
+                        renderContributionGrid(window.selectedContributionYear, window.currentContributionData.contributions); // Update grid
+                    }
+                });
+                chipsContainer.appendChild(yearChip);
+            });
+        }
+
 
         // --- Main Data Fetching Logic ---
         async function fetchAllData() {
@@ -553,7 +579,10 @@
             fieldsToLoad.forEach(id => updateText(id, '...', true));
             updateText('last-updated', 'Last updated: Loading...', true);
             document.getElementById('language-stats-container').innerHTML = '<p class="text-sm text-gray-400 loading-placeholder">Loading language data...</p>';
-            document.getElementById('contribution-calendar-container').innerHTML = '<p class="loading-placeholder text-gray-400">Loading contribution data...</p>';
+            // Set initial loading state for contribution section placeholders
+            document.getElementById('calendar-grid-placeholder').innerHTML = '<p class="loading-placeholder text-gray-400">Loading contribution grid...</p>';
+            document.getElementById('year-chips-container').innerHTML = '<p class="loading-placeholder text-gray-400 text-xs">Loading years...</p>';
+
 
             if (!gasWebAppUrl || gasWebAppUrl === 'YOUR_GAS_WEB_APP_URL') {
                 console.error("GAS Web App URL is not set.");
@@ -570,7 +599,7 @@
                 if (stats.error) { throw new Error(`GAS Script Error: ${stats.error} ${stats.details || ''}`); }
                 // console.log("Stats received from GAS:", stats);
 
-                // Update elements with GAS data
+                // Update standard stats elements
                 updateText('profile-name', stats.userName, false);
                 updateText('profile-bio', stats.userBio || 'Bio not available.', false);
                 updateImage('profile-pic', stats.userAvatarUrl);
@@ -586,14 +615,35 @@
                 if (stats.lastUpdated) { const date = new Date(stats.lastUpdated); updateText('last-updated', `Stats last updated: ${date.toLocaleString()}`, false); }
                 else { updateText('last-updated', 'Stats last updated: N/A', false); }
                 document.getElementById('github-link').href = `https://github.com/${githubUsername}`;
+                document.getElementById('x-link').href = `https://x.com/${githubUsername}`; // Update X link too
 
-                // Render contribution chart using data fetched via GAS
-                if (stats.contributionData) {
-                    renderContributionChart(stats.contributionData);
+                // Process and render contribution chart using data fetched via GAS
+                const contribContainer = document.getElementById('contribution-calendar-container'); // Refetch container just in case
+                const gridPlaceholder = document.getElementById('calendar-grid-placeholder');
+                const chipsContainer = document.getElementById('year-chips-container');
+
+                if (stats.contributionData && !stats.contributionData.error && Array.isArray(stats.contributionData.years) && Array.isArray(stats.contributionData.contributions)) {
+                    window.currentContributionData = stats.contributionData; // Store full data
+                    const years = stats.contributionData.years;
+                    const contributions = stats.contributionData.contributions;
+                    const totalContributions = years.reduce((sum, year) => sum + year.total, 0);
+
+                    if (years.length > 0) {
+                        renderYearChips(years, totalContributions); // Render chips (sets selected year)
+                        if (window.selectedContributionYear) {
+                            renderContributionGrid(window.selectedContributionYear, contributions); // Render grid for default year
+                        } else {
+                            if (gridPlaceholder) gridPlaceholder.innerHTML = '<p class="text-gray-400">No contribution years found.</p>';
+                        }
+                    } else {
+                        if (gridPlaceholder) gridPlaceholder.innerHTML = '<p class="text-yellow-400">No contribution year data available.</p>';
+                        if (chipsContainer) chipsContainer.innerHTML = '';
+                    }
                 } else {
-                    console.warn("Contribution data missing from GAS response.");
-                    const container = document.getElementById('contribution-calendar-container');
-                    if (container) container.innerHTML = '<p class="text-yellow-400">Contribution data not available via GAS.</p>';
+                    console.warn("Contribution data missing or error from GAS response:", stats.contributionData?.error);
+                    const errorMsg = stats.contributionData?.error ? `: ${stats.contributionData.error}` : '.';
+                    if (gridPlaceholder) gridPlaceholder.innerHTML = `<p class="text-red-400">Could not load contribution data${errorMsg}</p>`;
+                    if (chipsContainer) chipsContainer.innerHTML = ''; // Clear chips on error
                 }
 
             } catch (error) {
