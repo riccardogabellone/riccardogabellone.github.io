@@ -147,18 +147,49 @@
             background-color: #181818;
             padding: 1rem 1.5rem;
             border-radius: 8px;
-            overflow-x: auto;
+            /* Remove overflow-x: auto; */
             border: 1px solid #282a36;
+            /* Add overflow hidden to the main container */
+            overflow: hidden;
+            position: relative;
+            /* Needed for absolute positioning or transform origins */
+            cursor: grab;
+            /* Indicate grabbable */
+        }
+
+        .calendar-container.grabbing {
+            cursor: grabbing;
         }
 
         .calendar-grid-container {
+            /* This container might not be strictly necessary anymore,
+               but keep it for structure or remove if simplifying */
             margin-top: 0.5rem;
-            display: flex;
-            justify-content: center;
-            /* Add horizontal scroll only if grid overflows */
-            overflow-x: auto;
-            padding-bottom: 5px;
-            /* Space for scrollbar if needed */
+            width: 100%;
+            /* Ensure it takes full width */
+            height: 115px;
+            /* Set a fixed height for the viewport */
+            overflow: hidden;
+            /* Crucial: hide overflowing grid */
+            position: relative;
+            /* For positioning the transform wrapper */
+        }
+
+        /* New wrapper for transformations */
+        .calendar-transform-wrapper {
+            width: max-content;
+            /* Allow it to be as wide as the grid */
+            height: max-content;
+            /* Allow it to be as tall as the grid */
+            /* transform-origin: top left; */
+            /* Set initial origin */
+            /* transform will be applied by JS */
+            will-change: transform;
+            /* Optimize rendering */
+            position: absolute;
+            /* Allow positioning within grid-container */
+            top: 0;
+            left: 0;
         }
 
         .calendar-grid {
@@ -168,6 +199,8 @@
             grid-auto-columns: 12px;
             gap: 3px;
             width: max-content;
+            /* Grid determines its own size */
+            /* No position absolute needed here */
         }
 
         .calendar-cell {
@@ -351,9 +384,16 @@
                         <h3 class="text-lg font-semibold mb-2 text-gray-400">Contribution Activity</h3>
                         <div id="contribution-calendar-container"
                             class="calendar-container min-h-[200px] flex flex-col items-center justify-center">
-                            <div id="calendar-grid-placeholder"
-                                class="w-full min-h-[115px] my-4 flex items-center justify-center">
-                                <p class="loading-placeholder text-gray-400">Loading contribution grid...</p>
+                            <!-- Renamed placeholder to be the viewport -->
+                            <div id="calendar-viewport"
+                                class="calendar-grid-container w-full min-h-[115px] my-4 flex items-center justify-center">
+                                <!-- Add the transform wrapper inside -->
+                                <div id="calendar-transform-wrapper" class="calendar-transform-wrapper">
+                                    <!-- Grid will be inserted here by JS -->
+                                    <p id="calendar-loading-text"
+                                        class="loading-placeholder text-gray-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        Loading contribution grid...</p>
+                                </div>
                             </div>
                             <div id="year-chips-container"
                                 class="mt-4 flex flex-wrap gap-2 justify-center min-h-[30px]">
@@ -510,15 +550,18 @@
 
         // Function to render the grid for a specific year
         function renderContributionGrid(year, allContributions) {
-            const gridPlaceholder = document.getElementById('calendar-grid-placeholder'); // Target the placeholder
-            if (!gridPlaceholder || !allContributions) {
-                if (gridPlaceholder) gridPlaceholder.innerHTML = '<p class="text-yellow-400 text-xs">Could not render grid.</p>';
+            const transformWrapper = document.getElementById('calendar-transform-wrapper'); // Target the transform wrapper
+            const loadingText = document.getElementById('calendar-loading-text');
+            if (!transformWrapper) {
+                console.error("Calendar transform wrapper not found.");
+                if (loadingText) loadingText.textContent = 'Error: Grid container missing.';
                 return;
             }
 
-            gridPlaceholder.innerHTML = ''; // Clear placeholder content
+            transformWrapper.innerHTML = ''; // Clear previous grid or loading text
             const grid = document.createElement('div');
             grid.className = 'calendar-grid';
+            grid.id = 'dynamic-calendar-grid'; // Give it an ID for easier reference later
 
             const yearInt = parseInt(year);
             const contribMap = new Map(
@@ -549,11 +592,300 @@
                 const intensity = dayData ? dayData.intensity : '0';
                 cell.style.backgroundColor = getDraculaColor(intensity);
                 const count = dayData ? dayData.count : 0;
-                cell.setAttribute('title', `${dateString}: ${count} contribution${count === 1 ? '' : 's'}`);
+                cell.setAttribute('title', `${dateString}`);
                 grid.appendChild(cell);
                 currentDay.setDate(currentDay.getDate() + 1);
             }
-            gridPlaceholder.appendChild(grid); // Append the generated grid to the placeholder
+            transformWrapper.appendChild(grid); // Append the generated grid to the transform wrapper
+
+            // Reset transform state when grid is re-rendered
+            resetGridTransform();
+            // Fit grid initially after rendering
+            // Use requestAnimationFrame to ensure layout is calculated
+            requestAnimationFrame(() => {
+                fitGridToViewport();
+            });
+        }
+
+        // --- Zoom/Pan Logic ---
+        const calendarContainer = document.getElementById('contribution-calendar-container');
+        const viewport = document.getElementById('calendar-viewport');
+        const transformWrapper = document.getElementById('calendar-transform-wrapper');
+
+        let scale = 1;
+        let panning = false;
+        let pointX = 0;
+        let pointY = 0;
+        let start = { x: 0, y: 0 };
+        let currentTranslate = { x: 0, y: 0 }; // Store current translation separately
+
+        const minScale = 0.5;
+        const maxScale = 4;
+
+        function setTransform() {
+            if (transformWrapper) {
+                // Ensure transform-origin is set before applying transform for consistent zoom behavior
+                transformWrapper.style.transformOrigin = '0 0';
+                transformWrapper.style.transform = `translate(${currentTranslate.x}px, ${currentTranslate.y}px) scale(${scale})`;
+            }
+        }
+
+        function resetGridTransform() {
+            scale = 1;
+            currentTranslate = { x: 0, y: 0 };
+            // Don't call setTransform here, let fitGridToViewport handle initial state
+        }
+
+        // Optional: Function to initially fit/center the grid
+        function fitGridToViewport() {
+            if (!transformWrapper || !viewport) return;
+            const grid = document.getElementById('dynamic-calendar-grid');
+            if (!grid) return;
+
+            // Ensure grid has dimensions before calculating
+            if (grid.offsetWidth === 0 || grid.offsetHeight === 0) {
+                console.warn("Grid dimensions are zero, cannot fit to viewport yet.");
+                // Retry after a short delay if dimensions aren't ready
+                // setTimeout(fitGridToViewport, 50);
+                return;
+            }
+
+            const viewportRect = viewport.getBoundingClientRect();
+            // Use offsetWidth/offsetHeight as getBoundingClientRect might be affected by previous transforms
+            const gridWidth = grid.offsetWidth;
+            const gridHeight = grid.offsetHeight;
+
+
+            // Calculate scale to fit width OR height, whichever requires more scaling down
+            const scaleX = viewportRect.width / gridWidth;
+            const scaleY = viewportRect.height / gridHeight;
+            const initialScale = Math.min(scaleX, scaleY, 1); // Fit entirely, don't scale up initially
+
+            scale = Math.max(minScale, initialScale); // Apply min scale limit
+
+            // Center the scaled grid
+            const scaledGridWidth = gridWidth * scale;
+            const scaledGridHeight = gridHeight * scale;
+
+            currentTranslate.x = (viewportRect.width - scaledGridWidth) / 2;
+            currentTranslate.y = (viewportRect.height - scaledGridHeight) / 2;
+
+            // Clamp initial translation (basic clamping) - should not be needed if fitting correctly
+            // currentTranslate.x = Math.min(0, currentTranslate.x);
+            // currentTranslate.y = Math.min(0, currentTranslate.y);
+            currentTranslate = clampTranslate(currentTranslate.x, currentTranslate.y); // Use clamp for safety
+
+            console.log(`Fit: scale=${scale.toFixed(2)}, translate=(${currentTranslate.x.toFixed(2)}, ${currentTranslate.y.toFixed(2)})`);
+            setTransform();
+        }
+
+
+        function clampTranslate(newX, newY) {
+            if (!transformWrapper || !viewport) return { x: newX, y: newY };
+            const grid = document.getElementById('dynamic-calendar-grid');
+            if (!grid || grid.offsetWidth === 0) return { x: newX, y: newY }; // Check grid exists and has width
+
+            const viewportRect = viewport.getBoundingClientRect();
+            // Use offsetWidth/Height for original dimensions
+            const gridWidth = grid.offsetWidth;
+            const gridHeight = grid.offsetHeight;
+
+            const scaledGridWidth = gridWidth * scale;
+            const scaledGridHeight = gridHeight * scale;
+
+            // Calculate max translation limits
+            const maxX = 0;
+            const minX = viewportRect.width - scaledGridWidth;
+            const maxY = 0;
+            const minY = viewportRect.height - scaledGridHeight;
+
+            // Clamp values, handle cases where scaled grid is smaller than viewport
+            let clampedX = newX;
+            let clampedY = newY;
+
+            if (scaledGridWidth <= viewportRect.width) {
+                // If smaller or equal width, center it or clamp between 0 and viewport width - scaled width
+                clampedX = Math.max(0, Math.min(newX, viewportRect.width - scaledGridWidth));
+            } else {
+                // If wider, clamp between minX and maxX (which is 0)
+                clampedX = Math.max(minX, Math.min(newX, maxX));
+            }
+
+            if (scaledGridHeight <= viewportRect.height) {
+                // If smaller or equal height, center it or clamp between 0 and viewport height - scaled height
+                clampedY = Math.max(0, Math.min(newY, viewportRect.height - scaledGridHeight));
+            } else {
+                // If taller, clamp between minY and maxY (which is 0)
+                clampedY = Math.max(minY, Math.min(newY, maxY));
+            }
+
+
+            return { x: clampedX, y: clampedY };
+        }
+
+
+        if (calendarContainer && viewport && transformWrapper) {
+            // Mouse Wheel Zoom
+            viewport.onwheel = function (e) {
+                e.preventDefault();
+                const rect = viewport.getBoundingClientRect();
+                // Calculate pointer position relative to the viewport
+                const pointerX = e.clientX - rect.left;
+                const pointerY = e.clientY - rect.top;
+
+                // Calculate pointer position relative to the *unscaled*, *untranslated* element content
+                const xs = (pointerX - currentTranslate.x) / scale;
+                const ys = (pointerY - currentTranslate.y) / scale;
+
+                const delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
+                const wheel = delta > 0 ? 1.1 : 1 / 1.1; // Zoom factor
+
+                const oldScale = scale;
+                scale = Math.min(maxScale, Math.max(minScale, scale * wheel));
+
+                // Calculate the new translation needed to keep the point under the cursor fixed
+                currentTranslate.x = pointerX - xs * scale;
+                currentTranslate.y = pointerY - ys * scale;
+
+                // Clamp translation after zooming
+                currentTranslate = clampTranslate(currentTranslate.x, currentTranslate.y);
+
+                setTransform();
+            }
+
+            // Mouse Panning
+            viewport.onmousedown = function (e) {
+                e.preventDefault();
+                start = { x: e.clientX - currentTranslate.x, y: e.clientY - currentTranslate.y };
+                panning = true;
+                calendarContainer.classList.add('grabbing');
+            }
+
+            viewport.onmousemove = function (e) {
+                if (!panning) return;
+                e.preventDefault();
+                const newX = e.clientX - start.x;
+                const newY = e.clientY - start.y;
+
+                // Clamp translation during panning
+                const clamped = clampTranslate(newX, newY);
+                currentTranslate.x = clamped.x;
+                currentTranslate.y = clamped.y;
+
+                setTransform();
+            }
+
+            viewport.onmouseup = function (e) {
+                if (panning) {
+                    panning = false;
+                    calendarContainer.classList.remove('grabbing');
+                }
+            }
+
+            viewport.onmouseleave = function (e) {
+                if (panning) {
+                    panning = false;
+                    calendarContainer.classList.remove('grabbing');
+                }
+            }
+
+            // --- Touch Events ---
+            let initialDistance = null;
+            let touchStartCenter = null;
+
+            viewport.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    // Start panning
+                    const touch = e.touches[0];
+                    start = { x: touch.clientX - currentTranslate.x, y: touch.clientY - currentTranslate.y };
+                    panning = true;
+                    calendarContainer.classList.add('grabbing');
+                    initialDistance = null; // Reset pinch distance
+                    touchStartCenter = null;
+                } else if (e.touches.length === 2) {
+                    // Start pinching
+                    panning = false; // Stop panning if it was active
+                    calendarContainer.classList.remove('grabbing');
+                    const t1 = e.touches[0];
+                    const t2 = e.touches[1];
+                    initialDistance = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+                    // Calculate center point relative to viewport for zoom origin
+                    const rect = viewport.getBoundingClientRect();
+                    const centerX = ((t1.clientX + t2.clientX) / 2) - rect.left;
+                    const centerY = ((t1.clientY + t2.clientY) / 2) - rect.top;
+                    touchStartCenter = { x: centerX, y: centerY };
+                }
+                // Prevent default scroll/zoom behavior
+                if (e.touches.length > 0) e.preventDefault();
+            }, { passive: false }); // Need passive: false to call preventDefault
+
+            viewport.addEventListener('touchmove', (e) => {
+                if (panning && e.touches.length === 1) {
+                    // Panning
+                    const touch = e.touches[0];
+                    const newX = touch.clientX - start.x;
+                    const newY = touch.clientY - start.y;
+                    const clamped = clampTranslate(newX, newY);
+                    currentTranslate.x = clamped.x;
+                    currentTranslate.y = clamped.y;
+                    setTransform();
+                } else if (initialDistance !== null && touchStartCenter !== null && e.touches.length === 2) {
+                    // Pinching
+                    const t1 = e.touches[0];
+                    const t2 = e.touches[1];
+                    const currentDistance = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+                    const scaleFactor = currentDistance / initialDistance;
+
+                    const oldScale = scale;
+                    scale = Math.min(maxScale, Math.max(minScale, oldScale * scaleFactor));
+
+                    // Calculate pinch center relative to the *unscaled*, *untranslated* element content
+                    // touchStartCenter is already relative to viewport, adjust for current transform
+                    const xs = (touchStartCenter.x - currentTranslate.x) / oldScale;
+                    const ys = (touchStartCenter.y - currentTranslate.y) / oldScale;
+
+                    // Calculate the new translation
+                    currentTranslate.x = touchStartCenter.x - xs * scale;
+                    currentTranslate.y = touchStartCenter.y - ys * scale;
+
+
+                    // Clamp translation after zooming
+                    currentTranslate = clampTranslate(currentTranslate.x, currentTranslate.y);
+
+                    setTransform();
+
+                    // Update initial distance for continuous zoom *relative to the new scale*
+                    // This prevents acceleration issues on some devices
+                    initialDistance = currentDistance;
+                    // Also update the logical center point for next move event
+                    const rect = viewport.getBoundingClientRect();
+                    const currentCenterX = ((t1.clientX + t2.clientX) / 2) - rect.left;
+                    const currentCenterY = ((t1.clientY + t2.clientY) / 2) - rect.top;
+                    touchStartCenter = { x: currentCenterX, y: currentCenterY };
+
+
+                }
+                // Prevent default scroll/zoom behavior
+                if (e.touches.length > 0) e.preventDefault();
+            }, { passive: false }); // Need passive: false to call preventDefault
+
+            viewport.addEventListener('touchend', (e) => {
+                if (panning) {
+                    panning = false;
+                    calendarContainer.classList.remove('grabbing');
+                }
+                if (e.touches.length < 2) {
+                    initialDistance = null; // Reset pinch state if less than 2 fingers
+                    touchStartCenter = null;
+                }
+                // If all touches end, ensure grabbing cursor is removed
+                if (e.touches.length === 0) {
+                    calendarContainer.classList.remove('grabbing');
+                }
+            });
+
+        } else {
+            console.error("Could not find all required elements for calendar interaction.");
         }
 
         // Function to render the year selection chips
@@ -606,7 +938,9 @@
             updateText('last-updated', 'Last updated: Loading...', true);
             document.getElementById('language-stats-container').innerHTML = '<p class="text-sm text-gray-400 loading-placeholder">Loading language data...</p>';
             // Set initial loading state for contribution section placeholders
-            document.getElementById('calendar-grid-placeholder').innerHTML = '<p class="loading-placeholder text-gray-400">Loading contribution grid...</p>';
+            // Update loading text reference
+            const loadingText = document.getElementById('calendar-loading-text');
+            if (loadingText) loadingText.style.display = 'block'; // Make sure it's visible
             document.getElementById('year-chips-container').innerHTML = '<p class="loading-placeholder text-gray-400 text-xs">Loading years...</p>';
 
 
@@ -655,20 +989,22 @@
                     const totalContributions = years.reduce((sum, year) => sum + year.total, 0);
 
                     if (years.length > 0) {
-                        renderYearChips(years, totalContributions); // Render chips (sets selected year)
-                        if (window.selectedContributionYear) {
-                            renderContributionGrid(window.selectedContributionYear, contributions); // Render grid for default year
-                        } else {
-                            if (gridPlaceholder) gridPlaceholder.innerHTML = '<p class="text-gray-400">No contribution years found.</p>';
+                        // Set default year if not set
+                        if (window.selectedContributionYear === null) {
+                            window.selectedContributionYear = years.sort((a, b) => parseInt(b.year) - parseInt(a.year))[0].year;
                         }
+                        renderYearChips(years, totalContributions); // Render chips
+                        // Render the grid for the selected (or default) year
+                        // This will also trigger fitGridToViewport via requestAnimationFrame
+                        renderContributionGrid(window.selectedContributionYear, contributions);
                     } else {
-                        if (gridPlaceholder) gridPlaceholder.innerHTML = '<p class="text-yellow-400">No contribution year data available.</p>';
+                        if (loadingText) loadingText.textContent = 'No contribution year data available.';
                         if (chipsContainer) chipsContainer.innerHTML = '';
                     }
                 } else {
                     console.warn("Contribution data missing or error from GAS response:", stats.contributionData?.error);
                     const errorMsg = stats.contributionData?.error ? `: ${stats.contributionData.error}` : '.';
-                    if (gridPlaceholder) gridPlaceholder.innerHTML = `<p class="text-red-400">Could not load contribution data${errorMsg}</p>`;
+                    if (loadingText) loadingText.textContent = `Could not load contribution data${errorMsg}`;
                     if (chipsContainer) chipsContainer.innerHTML = ''; // Clear chips on error
                 }
 
@@ -677,8 +1013,11 @@
                 fieldsToLoad.forEach(id => updateText(id, 'Error', false));
                 document.getElementById('language-stats-container').innerHTML = '<p class="text-sm text-red-400">Error loading language data.</p>';
                 updateText('last-updated', 'Last updated: Error', false);
-                const container = document.getElementById('contribution-calendar-container');
-                if (container) container.innerHTML = `<p class="text-red-400">Error loading page data: ${error.message}</p>`;
+                // Update error message location
+                const loadingText = document.getElementById('calendar-loading-text');
+                if (loadingText) loadingText.textContent = `Error loading page data: ${error.message}`;
+                const chipsContainer = document.getElementById('year-chips-container');
+                if (chipsContainer) chipsContainer.innerHTML = ''; // Clear chips on error
             }
         }
 
