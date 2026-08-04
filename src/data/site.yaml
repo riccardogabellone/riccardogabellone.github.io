@@ -1,0 +1,61 @@
+name: Riccardo Gabellone
+headline: Software Engineer — Backend & Distributed Systems
+availability:
+  show: true
+  label: Open to opportunities
+tagline: >-
+  Backend engineer who builds production microservices by day and ships
+  privacy-first AI products solo by night.
+about: >-
+  Backend / distributed-systems engineer with 4+ years building Python and
+  Rust microservices in production — 40+ services, hundreds of requests per
+  second, thousands of users — where I grew from building individual services
+  to owning all of the infrastructure and pipelines. On the side I ship
+  complete products solo, most recently Vital Causality, a privacy-first
+  health app running on-device LLM inference, live on Android in Europe.
+socials:
+  github: https://github.com/riccardogabellone
+  linkedin: https://www.linkedin.com/in/riccardogabellone
+  x: https://x.com/GabelloneRic
+  telegram: https://t.me/riccardogabellone
+  email: ing.riccardogabellone@gmail.com
+cv_pdf: null # set to /cv/riccardo-gabellone-cv.pdf when the sanitized PDF lands
+skills:
+  - group: Languages
+    items: [Python, Rust, Kotlin, TypeScript, Dart, Bash]
+  - group: Backend & APIs
+    items: [FastAPI, gRPC, REST, API design, unit & integration testing]
+  - group: Infrastructure & DevOps
+    items: [AWS, Terraform, Docker, Kubernetes, CI/CD pipelines]
+  - group: Data & Messaging
+    items: [PostgreSQL, RabbitMQ, Kafka / Redpanda, Redis, Memgraph]
+  - group: Frontend & Mobile
+    items: [Android, Flutter, React]
+timeline:
+  - kind: work
+    title: Software Engineer
+    org: Boring Stuff S.r.l.
+    org_url: https://www.boringstuff.xyz/
+    start: 09/2022
+    end: 04/2026
+    bullets:
+      - Designed microservices architectures end to end — from IaC (Terraform, AWS) to custom CI pipelines
+      - Built backend services and internal libraries in Python (FastAPI) and Rust across 40+ services in production
+      - Owned sync/async inter-service communication — gRPC, RabbitMQ, Kafka/Redpanda, Redis — and high-volume PostgreSQL
+  - kind: education
+    title: M.S. in Software Engineering
+    org: Politecnico di Torino
+    org_url: null
+    start: "2018"
+    end: "2022"
+    bullets: []
+    note: "Thesis: development of a mutant-injection tool as part of a gamified GUI-testing environment"
+  - kind: education
+    title: B.S. in Computer Engineering
+    org: Politecnico di Torino
+    org_url: null
+    start: "2013"
+    end: "2018"
+    bullets: []
+stats_section:
+  show: true
