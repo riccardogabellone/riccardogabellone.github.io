@@ -31,11 +31,16 @@ export function validateStats(raw) {
     lastUpdated: str(raw.lastUpdated, 'lastUpdated'),
     contributionData: {
       years: cd.years.map((y, i) => ({ year: String(y.year), total: num(y.total, `years[${i}].total`) })),
-      contributions: cd.contributions.map((c, i) => ({
-        date: str(c.date, `contributions[${i}].date`),
-        intensity: String(c.intensity ?? '0'),
-        count: num(c.count ?? 0, `contributions[${i}].count`),
-      })),
+      // Dates normalized to YYYY-MM-DD and inactive days dropped (GAS marks
+      // activity via intensity; count is usually 0): the grid builder
+      // synthesizes empty days itself, and this keeps the baked payload small.
+      contributions: cd.contributions
+        .map((c, i) => ({
+          date: str(c.date, `contributions[${i}].date`).slice(0, 10),
+          intensity: String(c.intensity ?? '0'),
+          count: num(c.count ?? 0, `contributions[${i}].count`),
+        }))
+        .filter((c) => c.count > 0 || Number(c.intensity) > 0),
     },
   };
 }

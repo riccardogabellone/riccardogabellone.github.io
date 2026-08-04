@@ -36,6 +36,24 @@ test('coerces numeric strings from the sheet', () => {
   assert.equal(s.languages[0].percentage, 60.5);
 });
 
+test('normalizes contribution dates and drops inactive days', () => {
+  const s = validateStats({
+    ...good,
+    contributionData: {
+      years: [{ year: '2026', total: 7 }],
+      contributions: [
+        { date: '2026-01-05T00:00:00.000Z', intensity: '3', count: 7 },
+        { date: '2026-01-06T00:00:00.000Z', intensity: '0', count: 0 },
+        { date: '2026-01-07T00:00:00.000Z', intensity: '2', count: 0 }, // GAS: activity w/o count
+      ],
+    },
+  });
+  assert.deepEqual(
+    s.contributionData.contributions.map((c) => c.date),
+    ['2026-01-05', '2026-01-07'],
+  );
+});
+
 test('rejects a GAS error payload', () => {
   assert.throws(() => validateStats({ error: 'boom' }));
 });

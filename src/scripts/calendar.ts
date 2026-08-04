@@ -59,10 +59,8 @@ if (dataEl && viewport && wrapper && gridEl && yearsEl && calendar) {
       const parts: string[] = [];
       for (let i = 0; i < leadingBlanks; i++) parts.push('<div class="cell blank"></div>');
       for (const c of cells) {
-        const plural = c.count === 1 ? '' : 's';
-        parts.push(
-          `<div class="cell" style="background:${RAMP[c.intensity]}" title="${c.date}: ${c.count} contribution${plural}"></div>`,
-        );
+        const title = c.count > 0 ? `${c.date}: ${c.count} contribution${c.count === 1 ? '' : 's'}` : c.date;
+        parts.push(`<div class="cell" style="background:${RAMP[c.intensity]}" title="${title}"></div>`);
       }
       gridEl.innerHTML = parts.join('');
       const total = data.years.find((y) => y.year === year)?.total ?? 0;

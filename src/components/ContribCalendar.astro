@@ -24,7 +24,7 @@ const grid = buildYearGrid(latestYear, contributionData.contributions);
             <div
               class="cell"
               style={`background:${RAMP[c.intensity]}`}
-              title={`${c.date}: ${c.count} contribution${c.count === 1 ? '' : 's'}`}
+              title={c.count > 0 ? `${c.date}: ${c.count} contribution${c.count === 1 ? '' : 's'}` : c.date}
             ></div>
           ))
         }
