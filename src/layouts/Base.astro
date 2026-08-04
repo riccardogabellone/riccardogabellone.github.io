@@ -1,13 +1,36 @@
 ---
 import { Font } from 'astro:assets';
 import '../styles/global.css';
+import { site } from '../lib/site';
 
 interface Props {
   title: string;
   description: string;
 }
 const { title, description } = Astro.props;
-const og = new URL('/images/riccardo.jpg', Astro.site);
+const og = new URL('/images/og.png', Astro.site);
+const portrait = new URL('/images/riccardo.jpg', Astro.site);
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: 'Software Engineer',
+  description: site.tagline,
+  url: Astro.site?.href,
+  image: portrait.href,
+  email: `mailto:${site.socials.email}`,
+  sameAs: [site.socials.github, site.socials.linkedin, site.socials.x, site.socials.telegram],
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Politecnico di Torino' },
+  knowsAbout: site.skills.flatMap((g) => g.items),
+};
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: `${site.name} — Portfolio`,
+  url: Astro.site?.href,
+};
+const ldJson = (o: object) => JSON.stringify(o).replace(/</g, '\\u003c');
 ---
 <html lang="en">
   <head>
@@ -16,14 +39,20 @@ const og = new URL('/images/riccardo.jpg', Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={Astro.site} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.site} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={og} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#0d141c" />
+    <script type="application/ld+json" set:html={ldJson(personLd)}></script>
+    <script type="application/ld+json" set:html={ldJson(websiteLd)}></script>
     <Font cssVariable="--font-display" preload />
     <Font cssVariable="--font-body" preload />
     <Font cssVariable="--font-mono" />

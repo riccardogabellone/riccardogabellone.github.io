@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { site } from '../lib/site';
 import Icon from './Icon.astro';
+import portrait from '../assets/images/riccardo.jpg';
 const socialLinks = [
   { name: 'github', href: site.socials.github, label: 'GitHub profile' },
   { name: 'linkedin', href: site.socials.linkedin, label: 'LinkedIn profile' },
@@ -50,11 +52,14 @@ const socialLinks = [
     </div>
   </div>
   <div class="hero-photo reveal r2">
-    <img
-      src="/images/riccardo.jpg"
+    <Image
+      src={portrait}
       alt={`Portrait of ${site.name}`}
-      width="176"
-      height="176"
+      width={176}
+      height={176}
+      densities={[1, 2]}
+      format="webp"
+      quality={80}
       loading="eager"
       fetchpriority="high"
     />
