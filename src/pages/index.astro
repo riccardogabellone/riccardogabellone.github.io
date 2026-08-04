@@ -1,14 +1,124 @@
 ---
 import Base from '../layouts/Base.astro';
-import Icon from '../components/Icon.astro';
+import Hero from '../components/Hero.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../lib/site';
+
+const navItems = [
+  ['#about', 'about'],
+  ['#stats', 'stats'],
+  ['#projects', 'projects'],
+  ['#experience', 'experience'],
+  ['#skills', 'skills'],
+  ['#contact', 'contact'],
+];
 ---
-<Base title="Riccardo Gabellone — Software Engineer" description="Backend & Distributed Systems">
-  <main class="container">
-    <h1>Riccardo Gabellone</h1>
+<Base title={`${site.name} — Software Engineer`} description={site.tagline}>
+  <nav class="topnav" aria-label="Sections">
+    <div class="container nav-row">
+      <a class="mark mono" href="#top" aria-label="Back to top">rg<span class="cursor" aria-hidden="true">_</span></a>
+      <ul class="mono">
+        {
+          navItems.map(([href, label]) => (
+            <li>
+              <a href={href}>{label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </nav>
+
+  <Hero />
+  <div class="container">
     <hr class="lightbar" />
-    <h2 class="section-title">Tokens live</h2>
-    <p>Body text sample with a <a href="#top">link</a> and an icon <Icon name="terminal" />.</p>
-    <span class="chip hot">Rust</span>
-    <span class="chip">Python</span>
+  </div>
+
+  <main class="container">
+    <section id="about" class="section about">
+      <h2 class="section-title">About</h2>
+      <p class="prose">{site.about}</p>
+    </section>
+
+    <section id="stats" class="section"></section>
+
+    <section id="projects" class="section"></section>
+
+    <section id="experience" class="section"></section>
+
+    <section id="skills" class="section"></section>
+
+    <Contact />
   </main>
+
+  <Footer />
 </Base>
+
+<style>
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 84%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+  .mark {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  .mark .cursor {
+    animation: blink 1.2s steps(2, start) infinite;
+  }
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+  .topnav ul {
+    display: flex;
+    gap: 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+  .topnav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .topnav ul a:hover {
+    color: var(--gold);
+  }
+  @media (max-width: 700px) {
+    .topnav ul {
+      gap: 0.9rem;
+      overflow-x: auto;
+    }
+  }
+
+  .section {
+    margin-top: 4.5rem;
+  }
+  .section:first-child {
+    margin-top: 3rem;
+  }
+  .about .prose {
+    max-width: 46rem;
+    font-size: 1.05rem;
+    border-left: 2px solid var(--gold-deep);
+    padding-left: 1.25rem;
+  }
+</style>

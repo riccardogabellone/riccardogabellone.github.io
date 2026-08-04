@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import { parse } from 'yaml';
 import { z } from 'astro/zod';
 
@@ -36,8 +35,4 @@ export type SiteConfig = z.infer<typeof schema>;
 
 export function parseSiteConfig(yamlText: string): SiteConfig {
   return schema.parse(parse(yamlText));
-}
-
-export function getSiteConfig(): SiteConfig {
-  return parseSiteConfig(fs.readFileSync(new URL('../data/site.yaml', import.meta.url), 'utf8'));
 }
