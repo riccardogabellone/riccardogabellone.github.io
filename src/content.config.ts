@@ -10,9 +10,9 @@ const projects = defineCollection({
     description: z.string(),
     tech: z.array(z.string()),
     links: z.object({
-      live: z.string().url().optional(),
-      playstore: z.string().url().optional(),
-      repo: z.string().url().optional(),
+      live: z.url().optional(),
+      playstore: z.url().optional(),
+      repo: z.url().optional(),
     }),
     status: z.enum(['featured', 'listed', 'hidden']),
     order: z.number(),
