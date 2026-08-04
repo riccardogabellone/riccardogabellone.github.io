@@ -1,0 +1,200 @@
+---
+import { site } from '../lib/site';
+import { getStats } from '../lib/stats';
+import Icon from './Icon.astro';
+
+const stats = getStats();
+const socialLinks = [
+  { name: 'github', href: site.socials.github, label: 'GitHub profile' },
+  { name: 'linkedin', href: site.socials.linkedin, label: 'LinkedIn profile' },
+  { name: 'x', href: site.socials.x, label: 'X profile' },
+  { name: 'send', href: site.socials.telegram, label: 'Telegram' },
+];
+---
+<header id="top" class="hero container">
+  <div class="hero-text">
+    <p class="kicker mono reveal r0">
+      <span class="slashes" aria-hidden="true">//</span>
+      {site.headline}
+    </p>
+    <h1 class="reveal r1">{site.name}</h1>
+    {
+      site.availability.show && (
+        <p class="availability-row reveal r2">
+          <span class="chip hot availability" role="status">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            {site.availability.label}
+          </span>
+        </p>
+      )
+    }
+    <p class="tagline reveal r3">{site.tagline}</p>
+    <div class="hero-actions reveal r4">
+      <nav class="socials" aria-label="Profiles and contact">
+        {
+          socialLinks.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
+              <Icon name={s.name} size={22} />
+            </a>
+          ))
+        }
+        <a href={`mailto:${site.socials.email}`} aria-label="Email me">
+          <Icon name="mail" size={22} />
+        </a>
+      </nav>
+      {
+        site.cv_pdf !== null && (
+          <a class="cv-btn mono" href={site.cv_pdf} download>
+            <Icon name="download" size={18} />
+            <span>Download CV</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+  <div class="hero-photo reveal r2">
+    <img
+      src={stats.userAvatarUrl}
+      alt={`Portrait of ${site.name}`}
+      width="176"
+      height="176"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+</header>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding-top: 5rem;
+    padding-bottom: 3.5rem;
+  }
+  .hero-text {
+    max-width: 40rem;
+  }
+  .kicker {
+    color: var(--muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.75rem;
+  }
+  .kicker .slashes {
+    color: var(--gold);
+    font-weight: 700;
+    margin-right: 0.5ch;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem;
+  }
+  .availability-row {
+    margin: 0 0 1.25rem;
+  }
+  .availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  .tagline {
+    font-size: 1.15rem;
+    color: var(--body-text);
+    margin: 0 0 1.75rem;
+    max-width: 34rem;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .socials {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .socials a {
+    color: var(--muted);
+    display: inline-flex;
+    padding: 0.35rem;
+    border-radius: 6px;
+    transition: color 150ms ease, transform 150ms ease;
+  }
+  .socials a:hover {
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    background: var(--panel-2);
+    border: 1px solid var(--gold-deep);
+    border-radius: 999px;
+    padding: 0.5rem 1.1rem;
+    text-decoration: none;
+    transition: background 150ms ease;
+  }
+  .cv-btn:hover {
+    background: var(--panel);
+    color: var(--gold);
+  }
+  .hero-photo {
+    flex-shrink: 0;
+  }
+  .hero-photo img {
+    display: block;
+    width: 176px;
+    height: 176px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--gold-deep);
+    box-shadow:
+      -14px 10px 40px -18px rgba(176, 110, 8, 0.55),
+      14px -10px 40px -18px rgba(42, 108, 176, 0.55),
+      0 0 0 7px var(--panel);
+  }
+  @media (max-width: 760px) {
+    .hero {
+      flex-direction: column-reverse;
+      text-align: center;
+      padding-top: 3rem;
+      gap: 1.75rem;
+    }
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tagline {
+      max-width: 100%;
+    }
+    .hero-photo img {
+      width: 132px;
+      height: 132px;
+    }
+  }
+</style>

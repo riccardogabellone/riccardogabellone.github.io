@@ -1,0 +1,76 @@
+---
+import { site } from '../lib/site';
+import Icon from './Icon.astro';
+---
+<section id="contact" class="contact panel">
+  <h2 class="section-title">Get in touch</h2>
+  <p class="pitch">
+    Looking for a backend engineer who ships end to end? My inbox is open — for roles,
+    collaborations, or just to talk distributed systems.
+  </p>
+  <div class="actions">
+    <a class="cta mono" href={`mailto:${site.socials.email}`}>
+      <Icon name="mail" size={18} />
+      <span>Email me</span>
+    </a>
+    <a class="alt mono" href={site.socials.linkedin} target="_blank" rel="noopener noreferrer">
+      <Icon name="linkedin" size={18} />
+      <span>LinkedIn</span>
+    </a>
+    <a class="alt mono" href={site.socials.telegram} target="_blank" rel="noopener noreferrer">
+      <Icon name="send" size={18} />
+      <span>Telegram</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .contact {
+    text-align: center;
+    border-color: var(--gold-deep);
+    background:
+      radial-gradient(120% 140% at 50% 0%, rgba(176, 110, 8, 0.12), transparent 60%),
+      var(--panel);
+  }
+  .contact .section-title::before {
+    content: '// ';
+  }
+  .pitch {
+    max-width: 34rem;
+    margin: 0 auto 1.75rem;
+  }
+  .actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+  .cta,
+  .alt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    padding: 0.65rem 1.4rem;
+    text-decoration: none;
+    transition: filter 150ms ease, background 150ms ease;
+  }
+  .cta {
+    background: var(--gold);
+    color: #16202c;
+    font-weight: 700;
+  }
+  .cta:hover {
+    filter: brightness(1.08);
+    color: #0d141c;
+  }
+  .alt {
+    color: var(--body-text);
+    border: 1px solid var(--line);
+  }
+  .alt:hover {
+    color: var(--blue);
+    border-color: var(--blue-deep);
+  }
+</style>

@@ -1,0 +1,68 @@
+- id: vital-causality
+  title: Vital Causality
+  tagline: Privacy-first health diary with on-device AI
+  description: >-
+    Built entirely solo — idea, UX, Android app, backend, infrastructure. Health
+    data is special-category under GDPR, so the app is offline-first: the AI that
+    surfaces correlations between health events runs on-device with fine-tuned
+    models and local LLM inference, so raw health data never leaves the phone.
+    A remote-inference path handles heavier tasks with privacy designed in.
+    Live in production in Europe.
+  tech: [Kotlin, Android, On-device LLM, FastAPI, GCP]
+  links:
+    live: https://vitalcausality.app
+  status: featured
+  order: 1
+- id: doomhole
+  title: Doomhole
+  tagline: Anti-doomscroll Android app with a physically-traced black hole
+  description: >-
+    Renders a Schwarzschild black hole (null-geodesic AGSL shader) as a growing
+    accessibility overlay that swallows your feed the longer you scroll.
+    Offline, privacy-first, MIT-licensed.
+  tech: [Kotlin, AGSL shaders, Android accessibility]
+  links: {}
+  status: featured
+  order: 2
+- id: quiz-patente-nautica
+  title: Quiz Patente Nautica
+  tagline: Italian nautical-license exam trainer, shipped on Google Play
+  description: >-
+    Born from my own studying: designed, built, and published on Google Play in
+    under a month.
+  tech: [Kotlin, Android]
+  links: {}
+  status: featured
+  order: 3
+- id: photostacker
+  title: photostacker
+  tagline: Batch pipeline that stacks geometrically-identical photos
+  description: >-
+    Groups HDR/focus/burst shots via a three-stage funnel — EXIF bucketing,
+    perceptual hashing, DINOv2 ONNX embeddings — and exports multi-layer
+    PSD/TIFF. FastAPI + HTMX UI, ~30 tests.
+  tech: [Python, ONNX, FastAPI, HTMX]
+  links: {}
+  status: listed
+  order: 4
+- id: hyperloglog
+  title: hyperloglog
+  tagline: From-scratch HyperLogLog cardinality estimator in Rust
+  description: >-
+    Generic, bias-corrected, mergeable. Zero dependencies, rustdoc with
+    doctests, 18 tests, CI.
+  tech: [Rust]
+  links: {}
+  status: listed
+  order: 5
+- id: gnammy
+  title: Gnammy
+  tagline: Full-stack migration of a community food-delivery platform
+  description: >-
+    Migrated a pandemic-era delivery platform serving my hometown to a new
+    ecosystem — server provisioning, deploy scripts, Node.js API, React web,
+    Flutter and native Android clients.
+  tech: [Node.js, React, Flutter, Android]
+  links: {}
+  status: listed
+  order: 6

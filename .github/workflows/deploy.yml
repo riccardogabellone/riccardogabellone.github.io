@@ -1,0 +1,78 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 5 * * *' # daily stats refresh (off-peak minute)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check, test, contrast-gate, build (prebuild fetches GAS stats), upload
+        uses: withastro/action@v6
+        with:
+          build-cmd: pnpm check && pnpm test && node scripts/check-contrast.mjs && pnpm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  verify-pem:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Tesla PEM must match the canonical blob AND be byte-identical live
+        run: |
+          # 1) Repo copy still IS the canonical key (guards against in-repo corruption/normalization)
+          test "$(git hash-object public/.well-known/appspecific/com.tesla.3p.public-key.pem)" \
+            = "0a265e047e226f018d5b74735f6ce1f91aa58dd9"
+          # 2) Production serves exactly those bytes
+          curl -fsSL --retry 3 --retry-delay 5 \
+            https://riccardogabellone.github.io/.well-known/appspecific/com.tesla.3p.public-key.pem \
+            -o live.pem
+          cmp public/.well-known/appspecific/com.tesla.3p.public-key.pem live.pem
+          echo "PEM verified: canonical blob + live byte-identity"
+
+  refresh-snapshot:
+    if: github.event_name == 'schedule'
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Refresh committed last-good snapshot
+        run: |
+          node scripts/fetch-stats.mjs
+          # -I: ignore the always-changing fetchedAt line — commit only on real data changes
+          if ! git diff --quiet -I'"fetchedAt":' -- src/data/github-stats.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/data/github-stats.json
+            git commit -m "chore: refresh stats snapshot [skip ci]"
+            git push
+          fi

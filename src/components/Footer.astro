@@ -1,0 +1,42 @@
+---
+import { getStats } from '../lib/stats';
+
+const year = new Date().getFullYear();
+const stats = getStats();
+const asOf = new Date(stats.fetchedAt).toISOString().slice(0, 10);
+---
+<footer class="site-footer container">
+  <hr class="lightbar" />
+  <div class="row">
+    <p>© {year} Riccardo Gabellone</p>
+    <p class="mono asof">
+      <span data-stat="fetchedAt-label" data-fetched-at={stats.fetchedAt}>Stats as of {asOf}</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 5rem;
+    padding-bottom: 2rem;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .asof {
+    font-size: 0.75rem;
+  }
+  @media (max-width: 560px) {
+    .row {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+</style>

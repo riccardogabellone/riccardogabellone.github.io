@@ -1,0 +1,32 @@
+{
+  "name": "riccardogabellone.github.io",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Personal portfolio — Astro static site with build-time-baked GitHub stats",
+  "author": "Riccardo Gabellone",
+  "type": "module",
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/fetch-stats.mjs && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node --experimental-strip-types --test"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.20.0",
+      "onFail": "download"
+    }
+  },
+  "dependencies": {
+    "astro": "^7.1.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.13.3",
+    "typescript": "^5.9.3",
+    "yaml": "^2.9.0"
+  }
+}

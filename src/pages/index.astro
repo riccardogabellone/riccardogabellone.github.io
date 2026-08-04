@@ -1,0 +1,189 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import StatTiles from '../components/StatTiles.astro';
+import LanguageBars from '../components/LanguageBars.astro';
+import ContribCalendar from '../components/ContribCalendar.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Timeline from '../components/Timeline.astro';
+import SkillChips from '../components/SkillChips.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../lib/site';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => p.data.status !== 'hidden')
+  .sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((p) => p.data.status === 'featured');
+const listed = projects.filter((p) => p.data.status === 'listed');
+
+const navItems = [
+  ['#about', 'about'],
+  ['#stats', 'stats'],
+  ['#projects', 'projects'],
+  ['#experience', 'experience'],
+  ['#skills', 'skills'],
+  ['#contact', 'contact'],
+];
+---
+<Base title={`${site.name} — Software Engineer`} description={site.tagline}>
+  <nav class="topnav" aria-label="Sections">
+    <div class="container nav-row">
+      <a class="mark mono" href="#top" aria-label="Back to top">rg<span class="cursor" aria-hidden="true">_</span></a>
+      <ul class="mono">
+        {
+          navItems.map(([href, label]) => (
+            <li>
+              <a href={href}>{label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </nav>
+
+  <Hero />
+  <div class="container">
+    <hr class="lightbar" />
+  </div>
+
+  <main class="container">
+    <section id="about" class="section about">
+      <h2 class="section-title">About</h2>
+      <p class="prose">{site.about}</p>
+    </section>
+
+    {
+      site.stats_section.show && (
+        <section id="stats" class="section">
+          <h2 class="section-title">GitHub Statistics</h2>
+          <StatTiles />
+          <ContribCalendar />
+          <h3 class="subhead">Language breakdown <span class="mono note">(latest 1k commits)</span></h3>
+          <LanguageBars />
+        </section>
+      )
+    }
+
+    <section id="projects" class="section">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="proj-grid featured">
+        {featured.map((p, i) => <ProjectCard project={p} flagship={i === 0} />)}
+      </div>
+      {
+        listed.length > 0 && (
+          <div class="proj-grid listed">
+            {listed.map((p) => (
+              <ProjectCard project={p} />
+            ))}
+          </div>
+        )
+      }
+    </section>
+
+    <section id="experience" class="section">
+      <h2 class="section-title">Experience &amp; Education</h2>
+      <Timeline />
+    </section>
+
+    <section id="skills" class="section">
+      <h2 class="section-title alt">Skills &amp; Tech Stack</h2>
+      <SkillChips />
+    </section>
+
+    <Contact />
+  </main>
+
+  <Footer />
+  {site.stats_section.show && <script src="../scripts/revalidate.ts"></script>}
+</Base>
+
+<style>
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 84%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+  .mark {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  .mark .cursor {
+    animation: blink 1.2s steps(2, start) infinite;
+  }
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+  .topnav ul {
+    display: flex;
+    gap: 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+  .topnav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .topnav ul a:hover {
+    color: var(--gold);
+  }
+  @media (max-width: 700px) {
+    .topnav ul {
+      gap: 0.9rem;
+      overflow-x: auto;
+    }
+  }
+
+  .section {
+    margin-top: 4.5rem;
+  }
+  .section:first-child {
+    margin-top: 3rem;
+  }
+  .about .prose {
+    max-width: 46rem;
+    font-size: 1.05rem;
+    border-left: 2px solid var(--gold-deep);
+    padding-left: 1.25rem;
+  }
+  .subhead {
+    font-size: 1.05rem;
+    color: var(--text);
+    margin: 2.25rem 0 1rem;
+  }
+  .subhead .note {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+  .proj-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  }
+  .proj-grid.featured > :global(.flagship) {
+    grid-column: 1 / -1;
+  }
+  .proj-grid.listed {
+    margin-top: 1rem;
+  }
+</style>

@@ -1,0 +1,6 @@
+# The Tesla PEM must keep its committed bytes on every platform — no EOL conversion, ever.
+*.pem -text
+# Binary assets
+*.woff2 binary
+*.png binary
+*.jpg binary
