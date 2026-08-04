@@ -7,8 +7,7 @@ interface Props {
   flagship?: boolean;
 }
 const { project, flagship = false } = Astro.props;
-const { title, tagline, description, tech, links } = project.data;
-const hasLinks = Boolean(links.live || links.playstore || links.repo);
+const { title, tagline, description, tech, links, source_soon } = project.data;
 ---
 <article class:list={['card', { flagship }]}>
   {flagship && <p class="flag mono"><Icon name="star" size={14} /><span>flagship</span></p>}
@@ -43,7 +42,7 @@ const hasLinks = Boolean(links.live || links.playstore || links.repo);
         </a>
       )
     }
-    {!hasLinks && <span class="chip soon">source soon</span>}
+    {source_soon && <span class="chip soon">source soon</span>}
   </div>
 </article>
 

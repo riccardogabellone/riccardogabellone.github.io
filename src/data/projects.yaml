@@ -13,6 +13,17 @@
     live: https://vitalcausality.app
   status: featured
   order: 1
+- id: quiz-patente-nautica
+  title: Quiz Patente Nautica
+  tagline: Italian nautical-license exam trainer, shipped on Google Play
+  description: >-
+    Born from my own studying: designed, built, and published on Google Play in
+    under a month.
+  tech: [Kotlin, Android]
+  links:
+    live: https://quizpatentenautica.info
+  status: featured
+  order: 2
 - id: doomhole
   title: Doomhole
   tagline: Anti-doomscroll Android app with a physically-traced black hole
@@ -21,16 +32,6 @@
     accessibility overlay that swallows your feed the longer you scroll.
     Offline, privacy-first, MIT-licensed.
   tech: [Kotlin, AGSL shaders, Android accessibility]
-  links: {}
-  status: featured
-  order: 2
-- id: quiz-patente-nautica
-  title: Quiz Patente Nautica
-  tagline: Italian nautical-license exam trainer, shipped on Google Play
-  description: >-
-    Born from my own studying: designed, built, and published on Google Play in
-    under a month.
-  tech: [Kotlin, Android]
   links: {}
   status: featured
   order: 3
@@ -43,6 +44,7 @@
     PSD/TIFF. FastAPI + HTMX UI, ~30 tests.
   tech: [Python, ONNX, FastAPI, HTMX]
   links: {}
+  source_soon: true
   status: listed
   order: 4
 - id: hyperloglog
@@ -53,6 +55,7 @@
     doctests, 18 tests, CI.
   tech: [Rust]
   links: {}
+  source_soon: true
   status: listed
   order: 5
 - id: gnammy

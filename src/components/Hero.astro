@@ -1,9 +1,6 @@
 ---
 import { site } from '../lib/site';
-import { getStats } from '../lib/stats';
 import Icon from './Icon.astro';
-
-const stats = getStats();
 const socialLinks = [
   { name: 'github', href: site.socials.github, label: 'GitHub profile' },
   { name: 'linkedin', href: site.socials.linkedin, label: 'LinkedIn profile' },
@@ -54,7 +51,7 @@ const socialLinks = [
   </div>
   <div class="hero-photo reveal r2">
     <img
-      src={stats.userAvatarUrl}
+      src="/images/riccardo.jpg"
       alt={`Portrait of ${site.name}`}
       width="176"
       height="176"

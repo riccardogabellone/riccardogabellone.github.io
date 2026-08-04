@@ -37,11 +37,15 @@ timeline:
     org: Boring Stuff S.r.l.
     org_url: https://www.boringstuff.xyz/
     start: 09/2022
-    end: 04/2026
+    end: 06/2026
     bullets:
-      - Designed microservices architectures end to end — from IaC (Terraform, AWS) to custom CI pipelines
-      - Built backend services and internal libraries in Python (FastAPI) and Rust across 40+ services in production
-      - Owned sync/async inter-service communication — gRPC, RabbitMQ, Kafka/Redpanda, Redis — and high-volume PostgreSQL
+      - Designed and built microservices architectures, from infrastructure as code (Terraform, AWS) to custom CI pipelines
+      - Developed backend services in Python (FastAPI) and Rust, including custom-built internal libraries
+      - Implemented sync and async inter-service communication with gRPC, RabbitMQ, Kafka (Redpanda), Redis and Memgraph
+      - Designed and optimized PostgreSQL databases for high-volume workloads
+      - Containerized and managed service lifecycles with Docker and Kubernetes
+      - Designed APIs and wrote unit and integration test suites
+      - Built custom integrations with customers' legacy systems, mainly in Python
   - kind: education
     title: M.S. in Software Engineering
     org: Politecnico di Torino

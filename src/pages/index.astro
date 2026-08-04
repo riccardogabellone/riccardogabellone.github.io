@@ -100,21 +100,33 @@ const navItems = [
 </Base>
 
 <style>
+  /* liquid-glass floating pill */
   .topnav {
     position: sticky;
-    top: 0;
+    top: 0.75rem;
     z-index: 10;
-    background: color-mix(in srgb, var(--bg) 84%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
+    padding: 0 1rem;
   }
   .nav-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 0.7rem;
-    padding-bottom: 0.7rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 88%, transparent);
+    border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 14px 36px -18px rgba(0, 0, 0, 0.65);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .nav-row {
+      background: color-mix(in srgb, var(--panel) 55%, transparent);
+      backdrop-filter: blur(18px) saturate(1.7);
+      -webkit-backdrop-filter: blur(18px) saturate(1.7);
+    }
   }
   .mark {
     color: var(--gold);
@@ -179,6 +191,15 @@ const navItems = [
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  }
+  /* Featured: flagship spans the row, the other two split it — no empty track */
+  .proj-grid.featured {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 720px) {
+    .proj-grid.featured {
+      grid-template-columns: 1fr;
+    }
   }
   .proj-grid.featured > :global(.flagship) {
     grid-column: 1 / -1;
