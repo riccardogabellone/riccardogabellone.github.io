@@ -1,0 +1,54 @@
+---
+import { getStats } from '../lib/stats';
+
+const s = getStats();
+const tiles = [
+  ['commitsCount', 'Total Commits', s.commitsCount],
+  ['ownedRepoCount', 'Owned Repos', s.ownedRepoCount],
+  ['contributedReposCount', 'Contributed Repos', s.contributedReposCount],
+  ['prCount', 'Pull Requests', s.prCount],
+  ['issuesCount', 'Issues', s.issuesCount],
+  ['followers', 'Followers', s.followers],
+] as const;
+---
+<div class="tiles">
+  {
+    tiles.map(([key, label, value]) => (
+      <div class="tile">
+        <div class="value mono" data-stat={key}>
+          {value.toLocaleString('en-US')}
+        </div>
+        <div class="label">{label}</div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  @media (min-width: 720px) {
+    .tiles {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .tile {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+  }
+  .value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .label {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>

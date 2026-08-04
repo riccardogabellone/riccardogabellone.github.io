@@ -1,0 +1,58 @@
+---
+import { getStats } from '../lib/stats';
+
+const languages = getStats().languages;
+---
+<div class="langs">
+  {
+    languages.map((lang) => (
+      <div
+        class="lang"
+        role="img"
+        aria-label={`${lang.name} ${lang.percentage.toFixed(1)} percent`}
+        title={`${lang.name}: ${lang.percentage.toFixed(1)}%`}
+      >
+        <div class="lang-label">
+          <span class="name">{lang.name}</span>
+          <span class="pct mono">{lang.percentage.toFixed(1)}%</span>
+        </div>
+        <div class="track">
+          <div class="fill" style={`width: ${Math.max(lang.percentage, 0.4)}%;`}></div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .langs {
+    display: grid;
+    gap: 0.65rem;
+    max-width: 46rem;
+  }
+  .lang-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+  }
+  .name {
+    color: var(--body-text);
+  }
+  .pct {
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .track {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--panel-2);
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 0 4px 4px 0;
+  }
+</style>
