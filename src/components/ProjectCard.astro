@@ -1,0 +1,127 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  flagship?: boolean;
+}
+const { project, flagship = false } = Astro.props;
+const { title, tagline, description, tech, links } = project.data;
+const hasLinks = Boolean(links.live || links.playstore || links.repo);
+---
+<article class:list={['card', { flagship }]}>
+  {flagship && <p class="flag mono"><Icon name="star" size={14} /><span>flagship</span></p>}
+  <h3>{title}</h3>
+  <p class="tagline">{tagline}</p>
+  <p class="desc">{description}</p>
+  <ul class="tech mono" aria-label="Technologies">
+    {tech.map((t) => <li class="chip">{t}</li>)}
+  </ul>
+  <div class="links mono">
+    {
+      links.live && (
+        <a href={links.live} target="_blank" rel="noopener noreferrer">
+          <Icon name="external-link" size={16} />
+          <span>Visit</span>
+        </a>
+      )
+    }
+    {
+      links.playstore && (
+        <a href={links.playstore} target="_blank" rel="noopener noreferrer">
+          <Icon name="arrow-up-right" size={16} />
+          <span>Play Store</span>
+        </a>
+      )
+    }
+    {
+      links.repo && (
+        <a href={links.repo} target="_blank" rel="noopener noreferrer">
+          <Icon name="github" size={16} />
+          <span>Source</span>
+        </a>
+      )
+    }
+    {!hasLinks && <span class="chip soon">source soon</span>}
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    transition: border-color 150ms ease, transform 150ms ease;
+  }
+  .card:hover {
+    border-color: var(--gold-deep);
+    transform: translateY(-2px);
+  }
+  .card.flagship {
+    border-color: var(--gold-deep);
+    background:
+      radial-gradient(130% 120% at 0% 0%, rgba(176, 110, 8, 0.1), transparent 55%),
+      var(--panel);
+  }
+  .flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 0.6rem;
+  }
+  h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.25rem;
+  }
+  .tagline {
+    color: var(--gold);
+    font-size: 0.92rem;
+    margin: 0 0 0.7rem;
+  }
+  .desc {
+    font-size: 0.92rem;
+    margin: 0 0 1rem;
+    flex-grow: 1;
+  }
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+  .tech .chip {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.6rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    font-size: 0.82rem;
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .links a:hover {
+    color: var(--gold);
+    text-decoration: underline;
+  }
+  .soon {
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import { site } from '../lib/site';
+
+const HOT = new Set(['Python', 'Rust', 'FastAPI', 'Kubernetes', 'PostgreSQL']);
+---
+<div class="groups">
+  {
+    site.skills.map((group) => (
+      <div class="group">
+        <h3 class="label mono"><span class="slashes" aria-hidden="true">//</span>{group.group}</h3>
+        <ul class="chips">
+          {group.items.map((item) => (
+            <li class:list={['chip', { hot: HOT.has(item) }]}>{item}</li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .groups {
+    display: grid;
+    gap: 1.4rem;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+  .label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--blue);
+    margin: 0 0 0.6rem;
+    letter-spacing: 0.03em;
+  }
+  .label .slashes {
+    margin-right: 0.5ch;
+    font-weight: 700;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+import { site } from '../lib/site';
+import Icon from './Icon.astro';
+---
+<ol class="timeline">
+  {
+    site.timeline.map((entry) => (
+      <li class="item">
+        <span class="marker" aria-hidden="true">
+          <Icon name={entry.kind === 'work' ? 'briefcase' : 'graduation-cap'} size={13} />
+        </span>
+        <div class="body">
+          <h3>{entry.title}</h3>
+          <p class="org">
+            {entry.org_url !== null ? (
+              <a href={entry.org_url} target="_blank" rel="noopener noreferrer">
+                {entry.org}
+              </a>
+            ) : (
+              <span>{entry.org}</span>
+            )}
+            <span class="dates mono">{entry.start} — {entry.end}</span>
+          </p>
+          {entry.bullets.length > 0 && (
+            <ul class="bullets">
+              {entry.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          )}
+          {entry.note && <p class="note">{entry.note}</p>}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .item {
+    position: relative;
+    padding: 0 0 2rem 2.6rem;
+  }
+  .item::before {
+    content: '';
+    position: absolute;
+    left: 0.8rem;
+    top: 1.7rem;
+    bottom: 0.2rem;
+    width: 2px;
+    background: var(--line);
+  }
+  .item:last-child::before {
+    display: none;
+  }
+  .marker {
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: var(--panel-2);
+    border: 1px solid var(--gold-deep);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  h3 {
+    margin: 0 0 0.2rem;
+    font-size: 1.05rem;
+  }
+  .org {
+    margin: 0 0 0.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .org a,
+  .org span:first-child {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .org a:hover {
+    text-decoration: underline;
+  }
+  .dates {
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .bullets {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    display: grid;
+    gap: 0.3rem;
+  }
+  .bullets li::marker {
+    color: var(--gold);
+  }
+  .note {
+    margin: 0.4rem 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>

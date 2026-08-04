@@ -5,7 +5,17 @@ import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import StatTiles from '../components/StatTiles.astro';
 import LanguageBars from '../components/LanguageBars.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Timeline from '../components/Timeline.astro';
+import SkillChips from '../components/SkillChips.astro';
+import { getCollection } from 'astro:content';
 import { site } from '../lib/site';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => p.data.status !== 'hidden')
+  .sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((p) => p.data.status === 'featured');
+const listed = projects.filter((p) => p.data.status === 'listed');
 
 const navItems = [
   ['#about', 'about'],
@@ -55,11 +65,31 @@ const navItems = [
       )
     }
 
-    <section id="projects" class="section"></section>
+    <section id="projects" class="section">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="proj-grid featured">
+        {featured.map((p, i) => <ProjectCard project={p} flagship={i === 0} />)}
+      </div>
+      {
+        listed.length > 0 && (
+          <div class="proj-grid listed">
+            {listed.map((p) => (
+              <ProjectCard project={p} />
+            ))}
+          </div>
+        )
+      }
+    </section>
 
-    <section id="experience" class="section"></section>
+    <section id="experience" class="section">
+      <h2 class="section-title">Experience &amp; Education</h2>
+      <Timeline />
+    </section>
 
-    <section id="skills" class="section"></section>
+    <section id="skills" class="section">
+      <h2 class="section-title alt">Skills &amp; Tech Stack</h2>
+      <SkillChips />
+    </section>
 
     <Contact />
   </main>
@@ -142,5 +172,16 @@ const navItems = [
     color: var(--muted);
     font-size: 0.75rem;
     font-weight: 400;
+  }
+  .proj-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  }
+  .proj-grid.featured > :global(.flagship) {
+    grid-column: 1 / -1;
+  }
+  .proj-grid.listed {
+    margin-top: 1rem;
   }
 </style>
