@@ -5,6 +5,7 @@ import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import StatTiles from '../components/StatTiles.astro';
 import LanguageBars from '../components/LanguageBars.astro';
+import ContribCalendar from '../components/ContribCalendar.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Timeline from '../components/Timeline.astro';
 import SkillChips from '../components/SkillChips.astro';
@@ -58,7 +59,7 @@ const navItems = [
         <section id="stats" class="section">
           <h2 class="section-title">GitHub Statistics</h2>
           <StatTiles />
-          <div id="contrib-slot"></div>
+          <ContribCalendar />
           <h3 class="subhead">Language breakdown <span class="mono note">(latest 1k commits)</span></h3>
           <LanguageBars />
         </section>
