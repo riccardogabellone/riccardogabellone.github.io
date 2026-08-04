@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../lib/site';
+---
+<Base title="404 — Riccardo Gabellone" description="Page not found">
+  <main class="container nf">
+    <p class="kicker mono"><span class="slashes" aria-hidden="true">//</span>404</p>
+    <h1>Page not found</h1>
+    <p class="msg">
+      Nothing lives at this path. The whole site is a single page — you probably
+      want the start.
+    </p>
+    <a class="home mono" href="/">cd ~/</a>
+    <hr class="lightbar" />
+  </main>
+</Base>
+
+<style>
+  .nf {
+    min-height: 82vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    max-width: 40rem;
+  }
+  .kicker {
+    color: var(--muted);
+    font-size: 1rem;
+    margin: 0;
+  }
+  .kicker .slashes {
+    color: var(--gold);
+    font-weight: 700;
+    margin-right: 0.5ch;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    margin: 0;
+  }
+  .msg {
+    margin: 0;
+  }
+  .home {
+    display: inline-block;
+    color: var(--gold);
+    border: 1px solid var(--gold-deep);
+    border-radius: 999px;
+    padding: 0.55rem 1.3rem;
+    text-decoration: none;
+    transition: background 150ms ease;
+  }
+  .home:hover {
+    background: var(--panel);
+  }
+  .lightbar {
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+</style>

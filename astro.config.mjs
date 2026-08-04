@@ -1,11 +1,13 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 /** @param {string} file @param {string} weight */
 const fv = (file, weight) => ({ src: [`./src/assets/fonts/${file}`], weight, style: 'normal' });
 
 export default defineConfig({
   site: 'https://riccardogabellone.github.io',
+  integrations: [sitemap()],
   fonts: [
     {
       provider: fontProviders.local(),
