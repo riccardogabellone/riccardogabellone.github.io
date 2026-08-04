@@ -1,0 +1,22 @@
+/* Dark adaptation of the CV design system (cv_resumee/cv.html).
+   Font variables --font-display / --font-body / --font-mono are defined
+   globally by Astro's Fonts API — do not redefine them here. */
+:root {
+  /* surfaces — derived from CV --ink #16202C */
+  --bg: #0d141c;
+  --panel: #16202c;
+  --panel-2: #1d2937;
+  --line: #2a3648;
+  /* text */
+  --text: #e8edf3;
+  --body-text: #b9c4d0;
+  --muted: #8593a1; /* CV --muted, passes AA on --bg and --panel */
+  /* accents — lightened from CV gold #B06E08 / blue #2A6CB0 for AA on dark */
+  --gold: #e29b2d;
+  --blue: #64a4e0;
+  --gold-deep: #b06e08; /* decorative/large only (lightbar, borders) */
+  --blue-deep: #2a6cb0; /* decorative/large only */
+  /* layout */
+  --radius: 10px;
+  --content-width: 72rem;
+}

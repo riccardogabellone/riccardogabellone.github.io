@@ -19,11 +19,6 @@
       "onFail": "download"
     }
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  },
   "dependencies": {
     "astro": "^7.1.6"
   },

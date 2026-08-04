@@ -1,11 +1,14 @@
 ---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Riccardo Gabellone</title>
-  </head>
-  <body>
-    <h1>Scaffold OK</h1>
-  </body>
-</html>
+<Base title="Riccardo Gabellone — Software Engineer" description="Backend & Distributed Systems">
+  <main class="container">
+    <h1>Riccardo Gabellone</h1>
+    <hr class="lightbar" />
+    <h2 class="section-title">Tokens live</h2>
+    <p>Body text sample with a <a href="#top">link</a> and an icon <Icon name="terminal" />.</p>
+    <span class="chip hot">Rust</span>
+    <span class="chip">Python</span>
+  </main>
+</Base>
