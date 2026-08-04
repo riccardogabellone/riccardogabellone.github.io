@@ -15,6 +15,7 @@ const projects = defineCollection({
       repo: z.url().optional(),
     }),
     status: z.enum(['featured', 'listed', 'hidden']),
+    source_soon: z.boolean().default(false),
     order: z.number(),
   }),
 });
