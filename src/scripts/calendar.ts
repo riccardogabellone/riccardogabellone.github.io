@@ -23,6 +23,9 @@ if (dataEl && viewport && wrapper && gridEl && yearsEl && calendar) {
 
   if (data && Array.isArray(data.years) && Array.isArray(data.contributions)) {
     let selectedYear = calendar.dataset.latestYear ?? '';
+    // Take over from the CSS no-JS scroll fallback: pan/zoom owns the viewport now.
+    viewport.style.overflow = 'hidden';
+    viewport.style.touchAction = 'none';
     let scale = 1;
     const translate = { x: 0, y: 0 };
     const MIN_SCALE = 0.5;

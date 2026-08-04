@@ -21,10 +21,13 @@ export function buildYearGrid(year: string, contributions: DayContribution[]) {
   for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
     const key = d.toISOString().slice(0, 10);
     const hit = map.get(key);
+    // Numeric coercion here is a security boundary: this also renders payloads
+    // that arrive raw from the network (stats:refresh), so nothing string-typed
+    // may reach the innerHTML path in calendar.ts.
     cells.push({
       date: key,
       intensity: hit ? Math.min(4, Math.max(0, Number(hit.intensity) || 0)) : 0,
-      count: hit ? hit.count : 0,
+      count: hit ? Number(hit.count) || 0 : 0,
     });
   }
   return { cells, leadingBlanks };

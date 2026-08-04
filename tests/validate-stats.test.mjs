@@ -54,6 +54,33 @@ test('normalizes contribution dates and drops inactive days', () => {
   );
 });
 
+test('clamps intensity to a 0-4 integer string (injection boundary)', () => {
+  const s = validateStats({
+    ...good,
+    contributionData: {
+      years: [{ year: '2026', total: 7 }],
+      contributions: [
+        { date: '2026-01-05T00:00:00.000Z', intensity: '9', count: 1 },
+        { date: '2026-01-06T00:00:00.000Z', intensity: '</script><img>', count: 1 },
+      ],
+    },
+  });
+  assert.equal(s.contributionData.contributions[0].intensity, '4');
+  assert.equal(s.contributionData.contributions[1].intensity, '0');
+});
+
+test('rejects non-4-digit years (injection boundary)', () => {
+  assert.throws(() =>
+    validateStats({
+      ...good,
+      contributionData: {
+        years: [{ year: '</script>', total: 1 }],
+        contributions: [],
+      },
+    }),
+  );
+});
+
 test('rejects a GAS error payload', () => {
   assert.throws(() => validateStats({ error: 'boom' }));
 });

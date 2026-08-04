@@ -5,6 +5,7 @@
   "description": "Personal portfolio — Astro static site with build-time-baked GitHub stats",
   "author": "Riccardo Gabellone",
   "type": "module",
+  "packageManager": "pnpm@11.20.0",
   "scripts": {
     "dev": "astro dev",
     "build": "node scripts/fetch-stats.mjs && astro build",

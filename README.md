@@ -6,7 +6,7 @@ Personal portfolio — [riccardogabellone.github.io](https://riccardogabellone.g
 
 `public/.well-known/appspecific/com.tesla.3p.public-key.pem` is the Tesla Fleet API partner key served at
 `https://riccardogabellone.github.io/.well-known/appspecific/com.tesla.3p.public-key.pem`.
-**Its bytes must never change.** The deploy workflow's `verify-pem` job curls the live URL after every deploy and fails loudly on any drift (sha256 `968674d7fa9426c7e78d5cf7fcc81d4c3d7fd15f496dff64c03a916ca5c3d93d`).
+**Its bytes must never change.** The file is `-text` in `.gitattributes` (no EOL conversion on any platform); the canonical bytes are the LF blob — git blob `0a265e047e226f018d5b74735f6ce1f91aa58dd9`, sha256 `b08bdf5543c6fbd5deb23e504b5fdba62b038238656156edcde1946264d3a525`. The deploy workflow's `verify-pem` job asserts the repo copy still hashes to that blob AND curls the live URL after every deploy, failing loudly on any drift.
 
 ## Develop
 

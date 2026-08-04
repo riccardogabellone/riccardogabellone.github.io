@@ -53,7 +53,11 @@ const grid = buildYearGrid(latestYear, contributionData.contributions);
   </div>
 </div>
 
-<script type="application/json" id="contrib-data" set:html={JSON.stringify(contributionData)}></script>
+<script
+  type="application/json"
+  id="contrib-data"
+  set:html={JSON.stringify(contributionData).replace(/</g, '\\u003c')}
+></script>
 <script src="../scripts/calendar.ts"></script>
 
 <style>
@@ -66,9 +70,11 @@ const grid = buildYearGrid(latestYear, contributionData.contributions);
   }
   .viewport {
     height: 118px;
-    overflow: hidden;
+    /* No-JS fallback: horizontally scrollable. calendar.ts switches this to
+       hidden when it takes over with pan/zoom. */
+    overflow-x: auto;
+    overflow-y: hidden;
     position: relative;
-    touch-action: none;
     cursor: grab;
   }
   .viewport.grabbing {
