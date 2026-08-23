@@ -2,7 +2,7 @@
   "userName": "Riccardo Gabellone",
   "userBio": "I used to be shy about using AI autocompletion, a while ago. \r\nNow I mostly code with automatic programming.",
   "userAvatarUrl": "https://avatars.githubusercontent.com/u/56584159?v=4",
-  "commitsCount": 2415,
+  "commitsCount": 2431,
   "ownedRepoCount": 29,
   "contributedReposCount": 25,
   "prCount": 36,
@@ -11,23 +11,23 @@
   "languages": [
     {
       "name": "C++",
-      "percentage": 33.6
+      "percentage": 33.7
     },
     {
       "name": "Python",
-      "percentage": 32.1
+      "percentage": 32
     },
     {
       "name": "TypeScript",
-      "percentage": 6.8
+      "percentage": 6.7
     },
     {
       "name": "JavaScript",
-      "percentage": 6.4
+      "percentage": 6.3
     },
     {
       "name": "Dart",
-      "percentage": 6.3
+      "percentage": 6.2
     },
     {
       "name": "Kotlin",
@@ -35,7 +35,7 @@
     },
     {
       "name": "Cypher",
-      "percentage": 2.9
+      "percentage": 2.8
     },
     {
       "name": "Gherkin",
@@ -43,19 +43,19 @@
     },
     {
       "name": "Rust",
-      "percentage": 1.7
+      "percentage": 1.9
     },
     {
       "name": "Shell",
       "percentage": 1.7
     }
   ],
-  "lastUpdated": "2026-08-15T22:24:58.865Z",
+  "lastUpdated": "2026-08-22T22:25:03.597Z",
   "contributionData": {
     "years": [
       {
         "year": "2026",
-        "total": 2358
+        "total": 2374
       },
       {
         "year": "2025",
@@ -87,6 +87,21 @@
       }
     ],
     "contributions": [
+      {
+        "date": "2026-08-19",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-08-18",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-08-17",
+        "intensity": "1",
+        "count": 0
+      },
       {
         "date": "2026-08-13",
         "intensity": "1",
@@ -760,7 +775,7 @@
       {
         "date": "2026-01-03",
         "intensity": "0",
-        "count": 2358
+        "count": 2374
       },
       {
         "date": "2025-12-21",
@@ -4219,5 +4234,5 @@
       }
     ]
   },
-  "fetchedAt": "2026-08-16T05:41:02.029Z"
+  "fetchedAt": "2026-08-23T05:43:47.853Z"
 }
