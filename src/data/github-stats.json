@@ -2,7 +2,7 @@
   "userName": "Riccardo Gabellone",
   "userBio": "I used to be shy about using AI autocompletion, a while ago. \r\nNow I mostly code with automatic programming.",
   "userAvatarUrl": "https://avatars.githubusercontent.com/u/56584159?v=4",
-  "commitsCount": 2431,
+  "commitsCount": 2479,
   "ownedRepoCount": 29,
   "contributedReposCount": 25,
   "prCount": 36,
@@ -15,7 +15,7 @@
     },
     {
       "name": "Python",
-      "percentage": 32
+      "percentage": 32.1
     },
     {
       "name": "TypeScript",
@@ -47,15 +47,15 @@
     },
     {
       "name": "Shell",
-      "percentage": 1.7
+      "percentage": 1.8
     }
   ],
-  "lastUpdated": "2026-08-22T22:25:03.597Z",
+  "lastUpdated": "2026-08-29T22:25:00.957Z",
   "contributionData": {
     "years": [
       {
         "year": "2026",
-        "total": 2374
+        "total": 2422
       },
       {
         "year": "2025",
@@ -87,6 +87,21 @@
       }
     ],
     "contributions": [
+      {
+        "date": "2026-08-26",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-08-25",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-08-24",
+        "intensity": "1",
+        "count": 0
+      },
       {
         "date": "2026-08-19",
         "intensity": "1",
@@ -775,7 +790,7 @@
       {
         "date": "2026-01-03",
         "intensity": "0",
-        "count": 2374
+        "count": 2422
       },
       {
         "date": "2025-12-21",
@@ -4234,5 +4249,5 @@
       }
     ]
   },
-  "fetchedAt": "2026-08-23T05:43:47.853Z"
+  "fetchedAt": "2026-08-30T10:28:30.283Z"
 }
