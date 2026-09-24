@@ -33,6 +33,7 @@ export const GET: APIRoute = async (context) => {
     `Portfolio: ${base}`,
     `GitHub: ${site.socials.github}`,
     `LinkedIn: ${site.socials.linkedin}`,
+    `Gravatar: ${site.socials.gravatar}`,
     `Email: ${site.socials.email}`,
     '',
     '## Projects',

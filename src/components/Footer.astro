@@ -1,4 +1,5 @@
 ---
+import { site } from '../lib/site';
 import { getStats } from '../lib/stats';
 
 const year = new Date().getFullYear();
@@ -9,6 +10,11 @@ const asOf = new Date(stats.fetchedAt).toISOString().slice(0, 10);
   <hr class="lightbar" />
   <div class="row">
     <p>© {year} Riccardo Gabellone</p>
+    <p class="mono meta">
+      <a href="/llms.txt">llms.txt</a>
+      <span class="sep" aria-hidden="true">·</span>
+      <a href={site.socials.gravatar} target="_blank" rel="noopener noreferrer">gravatar</a>
+    </p>
     <p class="mono asof">
       <span data-stat="fetchedAt-label" data-fetched-at={stats.fetchedAt}>Stats as of {asOf}</span>
     </p>
@@ -25,13 +31,25 @@ const asOf = new Date(stats.fetchedAt).toISOString().slice(0, 10);
     justify-content: space-between;
     align-items: baseline;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.5rem 1.5rem;
     padding-top: 1.25rem;
     color: var(--muted);
     font-size: 0.85rem;
   }
+  .meta,
   .asof {
     font-size: 0.75rem;
+  }
+  .meta a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .meta a:hover {
+    color: var(--gold);
+  }
+  .sep {
+    margin: 0 0.5ch;
   }
   @media (max-width: 560px) {
     .row {

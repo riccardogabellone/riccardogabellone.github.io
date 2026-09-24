@@ -20,7 +20,13 @@ const personLd = {
   url: Astro.site?.href,
   image: portrait.href,
   email: `mailto:${site.socials.email}`,
-  sameAs: [site.socials.github, site.socials.linkedin, site.socials.x, site.socials.telegram],
+  sameAs: [
+    site.socials.github,
+    site.socials.linkedin,
+    site.socials.x,
+    site.socials.telegram,
+    site.socials.gravatar,
+  ],
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'Politecnico di Torino' },
   knowsAbout: site.skills.flatMap((g) => g.items),
 };
@@ -42,6 +48,7 @@ const ldJson = (o: object) => JSON.stringify(o).replace(/</g, '\\u003c');
     <link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={Astro.site} />
+    <link rel="describedby" href="/llms.txt" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.site} />
     <meta property="og:title" content={title} />
