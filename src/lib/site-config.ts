@@ -12,6 +12,7 @@ const schema = z.object({
     linkedin: z.url(),
     x: z.url(),
     telegram: z.url(),
+    gravatar: z.url(),
     email: z.email(),
   }),
   cv_pdf: z.string().nullable(),
