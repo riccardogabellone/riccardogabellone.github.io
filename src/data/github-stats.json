@@ -2,60 +2,60 @@
   "userName": "Riccardo Gabellone",
   "userBio": "I used to be shy about using AI autocompletion, a while ago. \r\nNow I mostly code with automatic programming.",
   "userAvatarUrl": "https://avatars.githubusercontent.com/u/56584159?v=4",
-  "commitsCount": 2820,
+  "commitsCount": 2840,
   "ownedRepoCount": 32,
-  "contributedReposCount": 25,
-  "prCount": 108,
+  "contributedReposCount": 24,
+  "prCount": 128,
   "issuesCount": 5,
-  "followers": 23,
+  "followers": 22,
   "languages": [
     {
       "name": "Python",
-      "percentage": 35.7
+      "percentage": 35.5
     },
     {
       "name": "C++",
-      "percentage": 29.2
+      "percentage": 28.5
     },
     {
       "name": "TypeScript",
-      "percentage": 9.9
+      "percentage": 11.7
     },
     {
       "name": "JavaScript",
-      "percentage": 5.2
-    },
-    {
-      "name": "Dart",
       "percentage": 5
     },
     {
+      "name": "Dart",
+      "percentage": 4.8
+    },
+    {
       "name": "Kotlin",
-      "percentage": 3.9
+      "percentage": 3.7
     },
     {
       "name": "Cypher",
-      "percentage": 2.3
+      "percentage": 2.2
     },
     {
       "name": "Gherkin",
-      "percentage": 1.9
+      "percentage": 1.8
     },
     {
       "name": "Shell",
-      "percentage": 1.7
+      "percentage": 1.6
     },
     {
       "name": "Rust",
-      "percentage": 1.7
+      "percentage": 1.6
     }
   ],
-  "lastUpdated": "2026-10-10T22:25:06.239Z",
+  "lastUpdated": "2026-10-17T22:25:03.276Z",
   "contributionData": {
     "years": [
       {
         "year": "2026",
-        "total": 2835
+        "total": 2875
       },
       {
         "year": "2025",
@@ -87,6 +87,31 @@
       }
     ],
     "contributions": [
+      {
+        "date": "2026-10-16",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-10-15",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-10-13",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-10-12",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-10-11",
+        "intensity": "1",
+        "count": 0
+      },
       {
         "date": "2026-10-09",
         "intensity": "1",
@@ -940,7 +965,7 @@
       {
         "date": "2026-01-03",
         "intensity": "0",
-        "count": 2835
+        "count": 2875
       },
       {
         "date": "2025-12-21",
@@ -4399,5 +4424,5 @@
       }
     ]
   },
-  "fetchedAt": "2026-10-11T11:23:22.754Z"
+  "fetchedAt": "2026-10-18T09:32:49.030Z"
 }
