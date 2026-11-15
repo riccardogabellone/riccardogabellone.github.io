@@ -2,43 +2,43 @@
   "userName": "Riccardo Gabellone",
   "userBio": "I used to be shy about using AI autocompletion, a while ago. \r\nNow I mostly code with automatic programming.",
   "userAvatarUrl": "https://avatars.githubusercontent.com/u/56584159?v=4",
-  "commitsCount": 2902,
+  "commitsCount": 2912,
   "ownedRepoCount": 33,
-  "contributedReposCount": 26,
-  "prCount": 155,
+  "contributedReposCount": 25,
+  "prCount": 158,
   "issuesCount": 5,
-  "followers": 25,
+  "followers": 24,
   "languages": [
     {
       "name": "Python",
-      "percentage": 36.1
+      "percentage": 35.2
     },
     {
       "name": "C++",
-      "percentage": 28.1
+      "percentage": 27.4
     },
     {
       "name": "TypeScript",
-      "percentage": 11.9
-    },
-    {
-      "name": "JavaScript",
-      "percentage": 4.9
-    },
-    {
-      "name": "Dart",
-      "percentage": 4.7
-    },
-    {
-      "name": "Kotlin",
-      "percentage": 3.6
-    },
-    {
-      "name": "Cypher",
-      "percentage": 2.1
+      "percentage": 11.5
     },
     {
       "name": "Rust",
+      "percentage": 5.2
+    },
+    {
+      "name": "JavaScript",
+      "percentage": 4.7
+    },
+    {
+      "name": "Dart",
+      "percentage": 4.5
+    },
+    {
+      "name": "Kotlin",
+      "percentage": 2.8
+    },
+    {
+      "name": "Cypher",
       "percentage": 2
     },
     {
@@ -50,12 +50,12 @@
       "percentage": 1.6
     }
   ],
-  "lastUpdated": "2026-11-07T23:25:01.609Z",
+  "lastUpdated": "2026-11-14T23:25:03.993Z",
   "contributionData": {
     "years": [
       {
         "year": "2026",
-        "total": 2971
+        "total": 2984
       },
       {
         "year": "2025",
@@ -87,6 +87,26 @@
       }
     ],
     "contributions": [
+      {
+        "date": "2026-11-13",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-11-11",
+        "intensity": "3",
+        "count": 0
+      },
+      {
+        "date": "2026-11-10",
+        "intensity": "1",
+        "count": 0
+      },
+      {
+        "date": "2026-11-09",
+        "intensity": "1",
+        "count": 0
+      },
       {
         "date": "2026-11-06",
         "intensity": "1",
@@ -578,18 +598,8 @@
         "count": 0
       },
       {
-        "date": "2026-05-22",
-        "intensity": "2",
-        "count": 0
-      },
-      {
-        "date": "2026-05-21",
-        "intensity": "1",
-        "count": 0
-      },
-      {
         "date": "2026-05-20",
-        "intensity": "2",
+        "intensity": "1",
         "count": 0
       },
       {
@@ -1010,7 +1020,7 @@
       {
         "date": "2026-01-03",
         "intensity": "0",
-        "count": 2971
+        "count": 2984
       },
       {
         "date": "2025-12-21",
@@ -4459,5 +4469,5 @@
       }
     ]
   },
-  "fetchedAt": "2026-11-08T11:54:46.779Z"
+  "fetchedAt": "2026-11-15T12:42:09.207Z"
 }
