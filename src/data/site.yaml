@@ -8,7 +8,7 @@ tagline: >-
   privacy-first AI products solo by night.
 about: >-
   Backend / distributed-systems engineer with 4+ years building Python and
-  Rust microservices in production — 40+ services, hundreds of requests per
+  Rust microservices in production — 50+ services, hundreds of requests per
   second, thousands of users — where I grew from building individual services
   to owning all of the infrastructure and pipelines. On the side I ship
   complete products solo, most recently Vital Causality, a privacy-first
@@ -21,42 +21,114 @@ socials:
   gravatar: https://gravatar.com/riccardogabellone
   email: ing.riccardogabellone@gmail.com
 cv_pdf: null # set to /cv/riccardo-gabellone-cv.pdf when the sanitized PDF lands
+# Groups, items and order mirror the Skills section of cv_resumee/cv.html.
 skills:
-  - group: Languages
-    items: [Python, Rust, Kotlin, TypeScript, Dart, Bash]
+  - group: Programming Languages
+    items:
+      - Python
+      - Rust
+      - TypeScript
+      - Kotlin
+      - SQL
+      - C/C++
+      - JavaScript
+      - Dart
   - group: Backend & APIs
-    items: [FastAPI, gRPC, REST, API design, unit & integration testing]
+    items:
+      - FastAPI
+      - Tokio (async Rust)
+      - gRPC / Protobuf
+      - REST / OpenAPI
+      - Node.js
+      - OAuth2 / JWT
   - group: Infrastructure & DevOps
-    items: [AWS, Terraform, Docker, Kubernetes, CI/CD pipelines]
+    items:
+      - AWS (EC2, S3, EKS, IAM and more)
+      - Google Cloud (Cloud Run, Firebase)
+      - Cloudflare (R2, DNS, Turnstile)
+      - Kubernetes
+      - Helm
+      - Docker
+      - Terraform / OpenTofu
+      - CI/CD
+      - GitHub Actions
+      - Linux
   - group: Data & Messaging
-    items: [PostgreSQL, RabbitMQ, Kafka / Redpanda, Redis, Memgraph]
+    items:
+      - PostgreSQL
+      - pgvector
+      - Kafka / Redpanda
+      - RabbitMQ
+      - Redis / Valkey
+      - Memcached
+      - Memgraph
+      - Supabase
+      - SQLite
   - group: Frontend & Mobile
-    items: [Android, Flutter, React]
+    items:
+      - Android (Kotlin, Jetpack Compose)
+      - Flutter
+      - Astro
+      - React
+  - group: AI
+    items:
+      - ML
+      - LLMs
+      - CNNs
+      - RAG
+      - Embeddings
+      - On-device LLMs (LiteRT)
+# Newest first. An ongoing role ends in "Present" (`end` is a free string).
+# Work bullets are the CV's bullets, verbatim, without its bold markup.
 timeline:
+  - kind: work
+    title: Lead Software Engineer — Project-based
+    org: A176LAB S.r.l. (CantiereGo)
+    org_url: null
+    start: 07/2026
+    end: Present
+    bullets:
+      - "Owned end-to-end engineering of CantiereGo, a multi-tenant SaaS for construction-site compliance (digital QR site badges, attendance, timesheets), from architecture to production: FastAPI and PostgreSQL with raw SQL (no ORM); React PWA on a generated OpenAPI client"
+      - "Provisioned production on AWS with OpenTofu (54 resource types: EC2 Graviton, CloudFront, S3, SES, CloudWatch, CloudTrail) and keyless GitHub Actions deploys via OIDC, with pull-based releases and automatic rollback in custom scripts"
+      - Set up unit, integration, load and e2e tests, monitoring, alerting and incident response
+  - kind: work
+    title: Freelance Software Engineer
+    org: ADAP Italia
+    org_url: null
+    start: 04/2026
+    end: 07/2026
+    bullets:
+      - Delivered the company's public site (React, TypeScript) and its lead-intake APIs on Supabase Edge Functions, with Cloudflare Turnstile, rate limiting and consent-gated analytics
+      - Redesigned and rewrote the car-rental back-office ERP on a modern stack with e-invoicing and LLM-powered features, and scripted the legacy platform migration; in daily production use
   - kind: work
     title: Software Engineer
     org: Boring Stuff S.r.l.
     org_url: https://www.boringstuff.xyz/
     start: 09/2022
-    end: 06/2026
+    end: 04/2026
     bullets:
-      - Designed and built microservices architectures, from infrastructure as code (Terraform, AWS) to custom CI pipelines
-      - Developed backend services in Python (FastAPI) and Rust, including custom-built internal libraries
-      - Implemented sync and async inter-service communication with gRPC, RabbitMQ, Kafka (Redpanda), Redis and Memgraph
-      - Designed and optimized PostgreSQL databases for high-volume workloads
-      - Containerized and managed service lifecycles with Docker and Kubernetes
-      - Designed APIs and wrote unit and integration test suites
-      - Built custom integrations with customers' legacy systems, mainly in Python
+      - Architected microservices for a 50+ service ERP platform on AWS (EKS) and Kubernetes (hundreds of req/s, thousands of users), growing from single services to owning infrastructure as code (Terraform) and custom CI pipelines
+      - Developed backend services in Python (FastAPI) and Rust with sync and async communication over gRPC, RabbitMQ, Kafka (Redpanda) and Redis, backed by unit and integration test suites
+      - "Designed and built platform-wide authentication in Python and Rust: SRP-6a zero-knowledge login, TOTP MFA, OAuth2 SSO, single-use refresh tokens and revocable JWTs checked at the gateway for ~45 services"
+      - Co-built the Rust API gateway in front of every service, adding Redis rate limiting, IP banning and request logging to Kafka, built on tokio and tower with a custom radix-tree router
+      - "Built platform-wide webhook delivery on the gateway: event capture with no per-service code, idempotent at-least-once delivery with retries, dead-lettering, replay and HMAC signing"
+      - Created an internal Rust proc-macro framework used by 16 services, generating routes, request validation and OpenAPI docs at compile time
+      - Migrated cross-service record relationships to a Memgraph graph behind a Rust gRPC service, with saga-style compensating rollbacks over RabbitMQ, used by 19 microservices
+      - Led a self-validating production scheduler in Rust (~7k LOC) for NP-hard job-shop planning, re-checking 9 invariants on every plan
+      - Shipped semantic search with self-hosted embedding inference over gRPC and pgvector HNSW indexes, kept in sync with PostgreSQL writes by event-driven workers
+      - Optimized PostgreSQL for high-volume workloads and implemented an RFC 5545 recurrence engine (Python and Rust) with range-indexed queries and O(n+m) conflict detection, used by 6+ services
+      - Co-developed and maintained the in-house Rust CLI (clap, tokio, kube-rs) that builds multi-arch Docker images and Helm-deploys ~50 microservices to Kubernetes
+      - Integrated customers' legacy systems with the platform, mainly in Python
   - kind: education
-    title: M.S. in Software Engineering
+    title: MSc Computer Engineering
     org: Politecnico di Torino
     org_url: null
     start: "2018"
     end: "2022"
     bullets: []
-    note: "Thesis: development of a mutant-injection tool as part of a gamified GUI-testing environment"
+    note: "Software track · Thesis: mutant injection tool for a gamified GUI testing environment"
   - kind: education
-    title: B.S. in Computer Engineering
+    title: BSc Computer Engineering
     org: Politecnico di Torino
     org_url: null
     start: "2013"

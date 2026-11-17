@@ -1,7 +1,16 @@
 ---
 import { site } from '../lib/site';
 
-const HOT = new Set(['Python', 'Rust', 'FastAPI', 'Kubernetes', 'PostgreSQL']);
+// The CV's seven headline skills, matched on the exact item text in site.yaml.
+const HOT = new Set([
+  'Python',
+  'Rust',
+  'FastAPI',
+  'PostgreSQL',
+  'AWS (EC2, S3, EKS, IAM and more)',
+  'Kubernetes',
+  'Android (Kotlin, Jetpack Compose)',
+]);
 ---
 <div class="groups">
   {
@@ -22,7 +31,8 @@ const HOT = new Set(['Python', 'Rust', 'FastAPI', 'Kubernetes', 'PostgreSQL']);
   .groups {
     display: grid;
     gap: 1.4rem;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    /* 19rem keeps the longest CV label ("Google Cloud (Cloud Run, Firebase)") on one line */
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
   }
   .label {
     font-size: 0.8rem;
