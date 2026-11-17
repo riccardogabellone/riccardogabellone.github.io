@@ -2,15 +2,14 @@
   title: Vital Causality
   tagline: Privacy-first health diary with on-device AI
   description: >-
-    Built entirely solo — idea, UX, Android app, backend and infrastructure.
+    Built entirely solo: idea, UX, Android app, backend and infrastructure.
     Health data is special-category under GDPR, so the app is privacy-first:
     possible correlations between health events come from a statistical
-    causality engine on the phone (time-lagged cross-correlation, Granger tests;
-    an LLM only checks plausibility), records sit in SQLCipher-encrypted storage
-    with end-to-end encrypted backups, and on-device inference runs stock Gemma
-    models via LiteRT-LM. Heavier features use a separate remote path, a FastAPI
-    gateway on Cloud Run in front of MedGemma, and those do send data off the
-    device. Live on Google Play, currently Europe-only.
+    causality engine on the phone, records sit in encrypted local storage with
+    end-to-end encrypted backups, and on-device inference runs stock Gemma
+    models via LiteRT-LM. Heavier features go through a separate FastAPI gateway
+    on Cloud Run for MedGemma, and those do send data off the device. Live on
+    Google Play, currently Europe-only.
   tech: [Kotlin, Android, On-device LLM, FastAPI, GCP]
   links:
     live: https://vitalcausality.app
@@ -23,8 +22,8 @@
     Born from my own studying: designed, built, and published on Google Play in
     under a month. The 2,500+ question bank ships in the app and progress is
     stored on the device, with no account, no ads and opt-in diagnostics; only
-    nautical charts are fetched on demand, from Cloudflare R2.
-  tech: [Kotlin, Jetpack Compose, Room, Hilt, Cloudflare R2]
+    nautical charts are fetched on demand.
+  tech: [Kotlin, Jetpack Compose, Room, Hilt]
   links:
     live: https://quizpatentenautica.info
   status: featured
@@ -71,7 +70,7 @@
   tagline: Full-stack migration of a community food-delivery platform
   description: >-
     Migrated a pandemic-era delivery platform serving my hometown to a new
-    ecosystem — server provisioning, deploy scripts, Node.js API, React web,
+    ecosystem: server provisioning, deploy scripts, Node.js API, React web,
     Flutter and native Android clients.
   tech: [Node.js, React, Flutter, Android]
   links: {}

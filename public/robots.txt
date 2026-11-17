@@ -4,7 +4,7 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# AI crawlers — welcome (see also /llms.txt)
+# AI crawlers are welcome (see also /llms.txt)
 User-agent: GPTBot
 Allow: /
 

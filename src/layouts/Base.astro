@@ -33,7 +33,7 @@ const personLd = {
 const websiteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: `${site.name} — Portfolio`,
+  name: `${site.name} - Portfolio`,
   url: Astro.site?.href,
 };
 const ldJson = (o: object) => JSON.stringify(o).replace(/</g, '\\u003c');

@@ -47,7 +47,7 @@ export const GET: APIRoute = async (context) => {
     '## Experience',
     '',
     ...site.timeline.map(
-      (t) => `- ${t.title} — ${t.org} (${t.start} — ${t.end})${t.note ? `: ${t.note}` : ''}`,
+      (t) => `- ${t.title} at ${t.org} (${t.start} - ${t.end})${t.note ? `: ${t.note}` : ''}`,
     ),
     '',
   ].join('\n');
