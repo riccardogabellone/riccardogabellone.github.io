@@ -13,6 +13,7 @@
   tech: [Kotlin, Android, On-device LLM, FastAPI, GCP]
   links:
     live: https://vitalcausality.app
+  flagship: true
   status: featured
   order: 1
 - id: quiz-patente-nautica
@@ -26,6 +27,7 @@
   tech: [Kotlin, Jetpack Compose, Room, Hilt]
   links:
     live: https://quizpatentenautica.info
+  flagship: true
   status: featured
   order: 2
 - id: doomhole
@@ -52,6 +54,7 @@
   tech: [Rust, DINOv2, ONNX Runtime, SQLite]
   links:
     repo: https://github.com/riccardogabellone/photostacker
+  flagship: true
   status: listed
   order: 4
 - id: hyperloglog

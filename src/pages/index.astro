@@ -110,7 +110,7 @@ const navItems = [
     <section id="projects" class="section">
       <h2 class="section-title">Featured Projects</h2>
       <div class="proj-grid featured">
-        {featured.map((p, i) => <ProjectCard project={p} flagship={i === 0} />)}
+        {featured.map((p, i) => <ProjectCard project={p} lead={i === 0} />)}
       </div>
       {
         listed.length > 0 && (
@@ -460,7 +460,7 @@ const navItems = [
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   }
-  /* Featured: flagship spans the row, the other two split it — no empty track */
+  /* Featured: the lead card spans the row, the other two split it, so no track is empty */
   .proj-grid.featured {
     grid-template-columns: 1fr 1fr;
   }
@@ -469,7 +469,7 @@ const navItems = [
       grid-template-columns: 1fr;
     }
   }
-  .proj-grid.featured > :global(.flagship) {
+  .proj-grid.featured > :global(.lead) {
     grid-column: 1 / -1;
   }
   .proj-grid.listed {

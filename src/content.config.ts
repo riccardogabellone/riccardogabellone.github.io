@@ -16,6 +16,7 @@ const projects = defineCollection({
     }),
     status: z.enum(['featured', 'listed', 'hidden']),
     source_soon: z.boolean().default(false),
+    flagship: z.boolean().default(false),
     order: z.number(),
   }),
 });

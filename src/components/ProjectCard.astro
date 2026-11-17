@@ -2,16 +2,21 @@
 import type { CollectionEntry } from 'astro:content';
 import Icon from './Icon.astro';
 
+/* `flagship` is a marking set per project in projects.yaml: the star and the
+   gold treatment. `lead` is positional: the page gives it to the first featured
+   card, which spans the row and keeps the star on its own line above the title. */
 interface Props {
   project: CollectionEntry<'projects'>;
-  flagship?: boolean;
+  lead?: boolean;
 }
-const { project, flagship = false } = Astro.props;
-const { title, tagline, description, tech, links, source_soon } = project.data;
+const { project, lead = false } = Astro.props;
+const { title, tagline, description, tech, links, source_soon, flagship } = project.data;
 ---
-<article class:list={['card', { flagship }]}>
-  {flagship && <p class="flag mono"><Icon name="star" size={14} /><span>flagship</span></p>}
-  <h3>{title}</h3>
+<article class:list={['card', { flagship, lead }]}>
+  <header class="head">
+    <h3>{title}</h3>
+    {flagship && <p class="flag mono"><Icon name="star" size={14} /><span>flagship</span></p>}
+  </header>
   <p class="tagline">{tagline}</p>
   <p class="desc">{description}</p>
   <ul class="tech mono" aria-label="Technologies">
@@ -66,6 +71,16 @@ const { title, tagline, description, tech, links, source_soon } = project.data;
       radial-gradient(130% 120% at 0% 0%, rgba(176, 110, 8, 0.1), transparent 55%),
       var(--panel);
   }
+  /* The star shares the title's line, so marking a card adds no height. When
+     the two do not fit, wrap-reverse lifts the star onto its own line above. */
+  .head {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem 0.75rem;
+    margin: 0 0 0.25rem;
+  }
   .flag {
     display: inline-flex;
     align-items: center;
@@ -74,10 +89,13 @@ const { title, tagline, description, tech, links, source_soon } = project.data;
     font-size: 0.72rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin: 0 0 0.6rem;
+    margin: 0;
+  }
+  .card.lead .flag {
+    flex-basis: 100%;
   }
   h3 {
-    margin: 0 0 0.25rem;
+    margin: 0;
     font-size: 1.25rem;
   }
   .tagline {
