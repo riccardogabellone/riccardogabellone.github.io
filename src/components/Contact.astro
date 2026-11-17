@@ -5,7 +5,7 @@ import Icon from './Icon.astro';
 <section id="contact" class="contact panel">
   <h2 class="section-title">Get in touch</h2>
   <p class="pitch">
-    Looking for a backend engineer who ships end to end? My inbox is open — for roles,
+    Looking for a backend engineer who ships end to end? My inbox is open for roles,
     collaborations, or just to talk distributed systems.
   </p>
   <div class="actions">
@@ -32,6 +32,11 @@ import Icon from './Icon.astro';
     background:
       radial-gradient(120% 140% at 50% 0%, rgba(176, 110, 8, 0.12), transparent 60%),
       var(--panel);
+  }
+  @media (max-width: 600px) {
+    .contact {
+      margin-top: 3.5rem;
+    }
   }
   .contact .section-title::before {
     content: '// ';

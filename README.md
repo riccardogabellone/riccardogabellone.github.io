@@ -1,6 +1,6 @@
 # riccardogabellone.github.io
 
-Personal portfolio — [riccardogabellone.github.io](https://riccardogabellone.github.io). Static [Astro](https://astro.build) site styled with the CV design system (dark navy, gold/blue dual accents, Space Grotesk / Inter / JetBrains Mono, self-hosted fonts). No UI framework, no Tailwind — token-driven vanilla CSS, two small vanilla TS scripts (contribution-calendar pan/zoom, background stats revalidation).
+Personal portfolio — [riccardogabellone.github.io](https://riccardogabellone.github.io). Static [Astro](https://astro.build) site styled with the CV design system (dark navy, gold/blue dual accents, Space Grotesk / Inter / JetBrains Mono, self-hosted fonts). No UI framework, no Tailwind — token-driven vanilla CSS, three small vanilla TS scripts (contribution-calendar pan/zoom, background stats revalidation, nav bar menu and glass refraction).
 
 ## ⚠️ Tesla public key — do not touch
 

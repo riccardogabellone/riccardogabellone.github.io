@@ -3,7 +3,7 @@ import { getStats } from '../lib/stats';
 
 const languages = getStats().languages;
 ---
-<div class="langs">
+<div class="langs" style={`--rows: ${Math.ceil(languages.length / 2)};`}>
   {
     languages.map((lang) => (
       <div
@@ -28,7 +28,15 @@ const languages = getStats().languages;
   .langs {
     display: grid;
     gap: 0.65rem;
-    max-width: 46rem;
+  }
+  /* Wide screens: two columns that fill the content width, ranked down each column. */
+  @media (min-width: 720px) {
+    .langs {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(var(--rows), auto);
+      grid-auto-flow: column;
+      column-gap: 2.5rem;
+    }
   }
   .lang-label {
     display: flex;

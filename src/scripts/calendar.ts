@@ -177,6 +177,10 @@ if (dataEl && viewport && wrapper && gridEl && yearsEl && calendar) {
       { passive: false },
     );
 
+    /* The calendar sits in a fold that starts closed, where it has no size to
+       fit against: fit again once the fold opens. */
+    calendar.closest('details')?.addEventListener('toggle', () => requestAnimationFrame(fitToViewport));
+
     let resizeTimer: ReturnType<typeof setTimeout> | undefined;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
