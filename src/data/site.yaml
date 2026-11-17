@@ -6,13 +6,14 @@ availability:
 tagline: >-
   Backend engineer who builds production microservices by day and ships
   privacy-first AI products solo by night.
+# The CV summary (cv_resumee/cv.html, data-cv="summary") in the first person.
 about: >-
-  Backend / distributed-systems engineer with 4+ years building Python and
-  Rust microservices in production (50+ services, hundreds of requests per
-  second, thousands of users), where I grew from building individual services
-  to owning all of the infrastructure and pipelines. On the side I ship
-  complete products solo, most recently Vital Causality, a privacy-first
-  health app running on-device LLM inference, live on Android in Europe.
+  Backend software engineer with 5+ years of experience, specialized in
+  distributed systems in Python and Rust. I grew from building single services
+  to owning the infrastructure of a 50+ microservice platform on AWS and
+  Kubernetes. I design, build and ship whole products, from architecture to
+  production, AI features included. MSc Computer Engineering, Politecnico di
+  Torino. Actively seeking a full-time backend software engineering role.
 socials:
   github: https://github.com/riccardogabellone
   linkedin: https://www.linkedin.com/in/riccardogabellone
