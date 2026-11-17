@@ -25,9 +25,9 @@ node scripts/check-contrast.mjs   # WCAG AA gate for the design tokens
 | File | Controls |
 |---|---|
 | `src/data/site.yaml` | name, headline, availability badge (`availability.show`), tagline/about, socials, skills groups, experience timeline, `cv_pdf` (path or `null` hides the button), `stats_section.show` |
-| `src/data/projects.yaml` | project cards: `status: featured \| listed \| hidden`, `order`, `links.live / playstore / repo` (no links ⇒ "source soon" chip) |
+| `src/data/projects.yaml` | project cards: `status: featured \| listed \| hidden`, `order`, `links.live / playstore / repo`, `source_soon: true` (shows a "source soon" chip) |
 
-Both files are schema-validated at build — a typo fails the build instead of silently breaking the page. To publish a repo later, add one `repo:` line and push.
+Both files are schema-validated at build — a typo fails the build instead of silently breaking the page. To publish a repo later, add a `repo:` link, remove `source_soon`, and push.
 
 ## GitHub stats pipeline
 
